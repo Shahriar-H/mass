@@ -1,0 +1,137 @@
+<style>
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.drop {
+	opacity: 0;
+}
+.btn1 {
+	padding: 10px;
+	font-size: 20px;
+	width: 258px;
+}
+input {
+	margin-top:5px;
+	padding: 10px;
+	font-size:15px;
+	width: 250px;
+}
+
+
+.drop {	
+	width: max-content;
+	overflow: scroll;
+	height: fit-content;
+	max-height: 400px;
+}
+.btn {
+	border: none;
+	background-color: none;
+	display: block;
+	padding: 10px;
+	font-size: 17px;
+	width: 250px;
+}
+
+.btn:hover {
+	background-color: lightgrey;
+
+}
+
+
+
+</style>
+<div class = "dropdown">
+	<button class = "btn1" onClick= "toggle()">Topics</button>
+	<a href = "/"><button style ="width: 150px; border: none; padding: 10px; font-size: 20px;color: whitesmoke; background-color: cornflowerblue">Home</button></a>
+	<div id="dropdwn" class = "drop">
+
+	</div>
+
+</div>
+
+
+<script>
+	topics = {{ topics|safe }}
+	body = {{ body|safe }}
+	parsed = {{ parsed|safe }}
+	var dropdown = document.getElementById('dropdwn')
+dropdwn()
+function dropdwn() {
+	var drop = document.getElementById('dropdwn') || document.getElementById('dropdwn1')
+var dropdown = document.createElement("div")
+dropdown.style.opacity = "0";
+dropdown.setAttribute("class","drop");
+for(let i = 0; i < topics.length; i++) {
+
+	dropdown.setAttribute("id","dropdwn")
+	var link = document.createElement("button")
+	link.setAttribute("class", "btn")
+	link.setAttribute("onClick","show("+(i)+")")
+	var text = document.createTextNode(topics[i])
+	link.appendChild(text)
+	dropdown.appendChild(link)
+}
+document.getElementsByClassName("dropdown")[0].replaceChild(dropdown,drop)
+
+}
+function show(i) {
+	var d = document.getElementById("dropdwn")
+	var b = document.createElement("div")
+	b.innerHTML = '<b>Topic:</b> '+ (topics[i])+ '<br><br><b>Body:</b> '+body[i]+'<br><br><b>Parsed:</b> '+ (parsed[i]);
+	b.style.padding = "20px";
+	b.style.fontSize = "20px";
+	b.setAttribute("id","dropdwn1")
+	document.getElementsByClassName("dropdown")[0].replaceChild(b,d)
+}
+
+function filter() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("inp");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("dropdwn");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+	a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}        
+
+
+
+function toggle() {
+	if(document.getElementById("dropdwn") === null)
+	{	
+		dropdwn()
+
+	}
+	var disp = document.getElementById("dropdwn").style.opacity
+	console.log(disp)
+	if(disp == "100") {
+		document.getElementById("dropdwn").style.opacity = "0"
+	}
+	else 
+		document.getElementById("dropdwn").style.opacity = "100"
+
+}
+</script>
