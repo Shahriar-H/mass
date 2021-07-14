@@ -1,462 +1,533 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<style>
-	body {
-	}
-	.main-wrapper{
-	    display: flex;
-	    flex-direction: row;
-	    max-width: 100vw;
-	    flex-wrap: wrap;
-	}
-	.main-wrapper .topbar{
-		flex: 0 0 100vw;
-	    height: 55px;
-	    max-width: 100%;
-	    display: flex;
-	    flex-direction: row;
-	    border-bottom: 1px solid #ccc;
-	    align-items: center;
-	}
-	.main-wrapper .topbar .icon{
-		flex:0 0 260px;
-		padding-left: 40px; 
-	}	
-	.main-wrapper .topbar .search{
-		    flex: 0 0 29%;
-		    padding-left: 30px; 
-	}
-	.main-wrapper .topbar .search input{
-		font-family: 'Monospace';
-	    border: 1px solid #ccc;
-	    border-radius: 5px;
-	    padding: 5px;
-	    font-size: 17px;
-	    width: 100%;
-	    background: #fbfbfb;
-	}
-	.main-wrapper .topbar .search input:focus{
-		outline: none
-	}
-	.main-wrapper .left-sidebar{
-		flex:0 0 300px;
-		position: relative;
-	}
-	.main-wrapper .left-sidebar .compose-button{
-		margin: 10px auto;
-    	padding-left: 40px;
-	}
-	.left-sidebar .compose-button button{
-    	cursor: pointer;
-		border: none;
-		border-radius: 50px;
-		transition: box-shadow .08s linear,min-width .15s cubic-bezier(0.4,0.0,0.2,1);
-		box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
-    	-webkit-font-smoothing: antialiased;
-    	background-color: #fff;
-    	padding: 10px 20px;
-    	font-size: 20px;
-	}
-	.left-sidebar .compose-button button:hover{
-		box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
-    	background-color: #fafafb;
-	}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+    <title>Gmail Templates</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-	.left-sidebar .compose-button button:focus{
-		outline: none;
-	}
-	.left-sidebar .menu-list{
-		border-top: 1px solid #ccc;
-	    width: 100%;
-	    font-size: 20px;
-	} 
-	.left-sidebar .menu-list ul{
-		list-style: none;
-		margin-left: 0;
-    	padding-left: 0;
-	}
+      <script>
+        jQuery(document).ready(function($) {
 
-	.left-sidebar .menu-list ul li{
-		padding: 5px 10px 5px 30px;
-		cursor: pointer;
-	}
-	.left-sidebar .menu-list ul li:hover,.left-sidebar .menu-list ul li.active{
-    	background-color: #efeff1;
-    	border-top-right-radius: 50px;	
-    	border-bottom-right-radius: 50px;	
-	}
-	.left-sidebar .menu-list ul li.active{
-    	background-color: #FADEDC;
-    	color: #d93025;
-    }
-	.content{
-		flex:1;
-	}
-	.form {
-		font-size: 18px;
-		margin-left: 30px;
-		display: none;
-		width: 100%;
-		background: #F2F2F2;
-		height: 90vh;
+            $(".clickable-row").click(function() {
+                let id = this.id
+                window.location = 'detail/?id=' + this.id
+            });
 
+            jQuery('.button').click(function(){
+                jQuery('.bottom-form').css("display","block");
+            });
 
-	}
-	#id_topic{
-		font-family: 'Monospace';	
-		border-radius: 5px;
-		padding: 15px;
-		font-size: 17px;
-		background: #fff;
-	}
-	#id_body {
-		font-family: 'Monospace';
-		border-radius: 5px;
-		max-width: 900px;
-		height: 300px;
-		padding: 15px;
-		font-size: 17px;
-		margin:auto;
-		background: #fff;
-	}
+            jQuery('.primary').click(function(){
+            jQuery('.table-content-primary').css("display","block");
+            jQuery('.table-content-social').css("display","none");
+            jQuery('.table-content-promotion').css("display","none");
+            });
 
+            jQuery('.social1').click(function(){
+            jQuery('.table-content-social').css("display","block");
+            jQuery('.table-content-primary').css("display","none");
+            jQuery('.table-content-promotion').css("display","none");
+            });
 
-	.slider {
-		margin-top: 10px;
-		position: absolute;
-		margin-right: 30px;
-		margin-left: auto;
-		width: 50px;
-		height: 50px;
-		cursor: pointer;
-		background-color: salmon;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-	}
+            jQuery('.promotion').click(function(){
+            jQuery('.table-content-promotion').css("display","block");
+            jQuery('.table-content-social').css("display","none");
+            jQuery('.table-content-primary').css("display","none");
+            });
 
-	.slider:before {
-		position: absolute;
-		content: "";
-		height: 25px;
-		width: 25px;
-		top: 12px;
-		right: 5px;
-		left: 12px;
-		bottom: 0px;
-		background-color: white;
-		-webkit-transition: .4s;
-		transition: .4s;
-	}
+            jQuery('.social1').click(function(){
+            jQuery('.primary').removeClass('active');
+            jQuery('.social1').addClass('active');
+            jQuery('.promotion').removeClass('active');
+            });
 
+            jQuery('.promotion').click(function(){
+            jQuery('.primary').removeClass('active');
+            jQuery('.promotion').addClass('active');
+            jQuery('.social1').removeClass('active');
+            });
+        });
+    </script>
 
-	.switch input { 
-		opacity: 0;
-		width: 0;
-		height: 0;
-	}
+    {% block extracss%}
+        <style>
+            {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                font-family: 'Times New Roman', Times, serif;
+                font-size:16px;
+            }
+            .top-container {
+                margin-top: 6px;
+            }
+            .top-container .left-section .menu-icon {
+                width: 19px;
+                height: 2px;
+                background-color: black;
+                margin: 6px 6px;
+            }
+            .top-container img {
+                height: 20px;
+                padding-right: 11px;
+            }
+            .primary{
+                padding-left: 9px;
+                font-size: 16px;
+                padding-right: 20px;
+                padding-top: 9px;
+                padding-bottom: 12px;
+            }
+            .active{
+                background-color:#efefef;
+                color: red;
+                cursor: pointer;
+                border-bottom: 1px solid red;
+                border-width: 4px;
+            }
+            .primary:hover{
+                background-color: #efefef;
+                color: red;
+                cursor: pointer;
+                border-bottom: 1px solid red;
+                border-width: 4px;
+            }
+            .social1{
+                padding-left: 9px;
+                font-size:16px;
+                padding-right: 20px;
+                padding-top: 9px;
+                padding-bottom: 12px;
+            }
+            .social1:hover{
+                background-color: #efefef;
+                color: red;
+                cursor: pointer;
+                border-bottom: 1px solid green;
+                border-width: 4px;
+            }
+            .promotion{
+                padding-left: 9px;
+                font-size:16px;
+                padding-right: 20px;
+                padding-top: 9px;
+                padding-bottom: 12px;
+            }
+            .promotion:hover{
+                background-color: #efefef;
+                color: red;
+                cursor: pointer;
+                border-bottom: 1px solid blue;
+                border-width: 4px;
+            }
 
-	.slider.round {
-		border-radius: 34px;
-	}
+            .top-container .gmail-text {
+                position: relative;
+                top: -45px;
+                left: 43px;
+            }
+            i.bi.bi-search {
+                position: relative;
+                left: -725px;
+            }
 
-	.slider.round:before {
-		border-radius: 50%;
-	}
-	.admin {
-		padding: 15px 30px;
-		border: 1px solid cornflowerblue;
-		border-radius: 10px;
-		font-size: 20px;
-        background-color: cornflowerblue;
-        color: whitesmoke;
-	    cursor: pointer;
-	    margin-left: 20.1%;
-    	margin-top: 20px;
+            .top-container input[type="search"] {
+                padding-right: 503px;
+                padding-left: 30px;
+                border: none;
+                padding-top: 6px;
+                padding-bottom: 6px;
+                background-color: #efefef;
+            }
+            .divider {
+                border: 1px solid #efefef;
+                margin-top: -36px;
+            }
+            .container{
+                display: flex;
+                margin-top: 10px;
+            }
+            .container .right-part {
+                position: relative;
+                left: -75px;
+                width: 100%;
+                top: 11px;
+            }
+            .button {
+                border: none;
+                color: black;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 16px;
+                font-size: 16px;
+              }
+              .button:focus{
+                  outline:none !important;
+              }
 
-	}
-	.admin:hover{
-		color: cornflowerblue;
-		background-color: whitesmoke;
-		border: 1px solid cornflowerblue;
+              .container .left-part {
+                width: 25%;
+                position: relative;
+                left: -82px;
+            }
 
-	}
-	.admin:focus{
-		outline: none;
-	}
-	#menu {
-		height: 88vh;
-		max-height: 88vh;
-		width: 100%;
-		overflow: scroll;
-		overflow-x: hidden;
-		margin-left: 10px;
-	}
-	.items {
-		display: block;
-		border: none;
-		background-color: white;
-		padding: 15px;
-		font-size: 17px;
-	}
-	.items:hover{
-    	background-color: #efeff1;
-	}
+            .container .left-part  ul {
+                list-style-type: none;
+                margin-top: -7px;
+            }
 
-	#page{
-		position: relative;
-		display: flex;
-		flex-direction: row;
-		padding-top: 10px;
-	}
-	button{ padding: 8px;
-		font-size: 15px;}
-		.arr-top{
-			position: absolute;
-		    right: 88px;
-		    height: 35px;
-		    width: 35px;
-		    border: 1px solid transparent;
-		    text-align: center;
-		    cursor: pointer;
-		    border-radius: 6px;
-		    color: #c3c3c3;
-		    font-weight: bold;
-		    background: transparent;
-		    top: 20px;
-		}
-		.arr-top:first-child{
-			right: 6.7%
-		}
-		.arr {
-			margin-left: 15px;
-			height: 35px;
-			width: 35px;
-			border: 1px solid transparent;
-			text-align: center;
-			cursor: pointer;
-			border-radius: 6px;
-			color:#c3c3c3;
-			font-weight: bold;
-			position: absolute;
-		    right: 120px;
-		    top: -44px;
-		    background: transparent;
-		}
-		.arr:hover,.arr-top:hover{
-			box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302), 0 4px 8px 3px rgba(60,64,67,0.149);
-    		background-color: #fafafb;
-		}
-		.arr:last-of-type {
-			right: 5%;
-		}
-		.arr:focus{
-			outline: none;
-		}
-
-	</style>
-	<div class="main-wrapper">
-		<div class="topbar">
-			<div class="icon">
-				<img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png" >
-			</div>
-			<div class="search">
-				<input type="text" name="search" placeholder="Search">
-			</div>
-		</div>
-		<div class="left-sidebar">
-			<div class="compose-button"><button>Compose</button></div>
-			<div class="menu-list">
-				<ul>
-					<li class="active">Inbox</li>
-					<li>Sent</li>
-					<li>Drafts</li>
-					<li>Important</li>
-				</ul>
-			</div>
-		</div>
-		<div class="content">
-			<button class="arr-top" >&lt; </button>
-			<button class="arr-top" > &gt;</button>
-			<form action="" method="POST">
-				{% csrf_token %}
-				<label id = "sl" class = "switch">
-					<input id="sub" type="submit" value = "">
-					<span class = "slider round"></span>
-				</label>
-				<div id="page">
-					<div class="form">
-						{{ form.topic.label }}<br/>
-						{{ form.topic }}<br/><br/>
-						{{ form.body.label }}<br/>
-						{{ form.body }}<br/><br/>
-						
-					</div>
-					<div id="menu"></div>
-				</div>
-
-			</form>
-		</div>
-	</div>
-
-	<script>
-		topics = {{topics | safe}}
-		body = {{body | safe}}
-		parsed = {{parsed | safe}}
-		keys = {{ keys | safe }}
-		console.log(keys)
-		var menu = document.getElementById("menu")
-
-		for(let i=0; i<topics.length; i++) {
-			var link = document.createElement("div")
-			link.setAttribute("class", "items")
-			link.setAttribute("onClick","show("+(i)+")")
-			var text = document.createTextNode(topics[i])
-			link.appendChild(text)
-			menu.appendChild(link)
-		}
-		let flag = 0
-		function show(i) {
-			console.log("flag = ",flag)
-			
-			var color = document.getElementsByClassName("slider round")[0].style.background
-			if(flag == 0)
-				{	var btn = document.createElement("button")
-			var b = document.getElementById("sub")
-			btn.setAttribute("id", "sub")
-			btn.style.display = "none"
-			btn.addEventListener("click", () => {
-				parse(i);
-				event.preventDefault();
-			}
-			)
-			document.getElementById("sl").replaceChild(btn, b)
-		}
-		var form = document.getElementsByClassName("form")[0];
-		document.getElementsByClassName("slider")[0].style.background = "salmon"
-		var form_new = document.createElement("div")
-		form_new.setAttribute("class", "form")
-		var tl = document.createTextNode("Topic")
-		var bl = document.createTextNode("Body")
-		var topc = document.createElement("div")
-		var br = document.createElement("br")
-		topc.setAttribute("id","id_topic")
-		topc.innerHTML = topics[i]
-		var bod = document.createElement("div")
-		var x = document.createElement("button")
-		x.setAttribute("class","admin")
-		x.innerHTML = "Main Menu"
-		bod.setAttribute("id","id_body")	
-
-		bod.innerHTML = ""
-		body[i].split("\n").forEach((str) => bod.innerHTML += str + "<br>")
-		
-		console.log(bod.innerHTML)
-		// form_new.appendChild(tl)
-		form_new.appendChild(topc)
-		form_new.appendChild(br)
-		form_new.appendChild(br)
-		// form_new.appendChild(bl)
-		form_new.appendChild(bod)
-		form_new.appendChild(x)
-		var arr1 = document.createElement("button")
-		var arr2 = document.createElement("button")
-		arr1.innerHTML = "<--"
-		arr2.innerHTML = "-->"
-		arr1.setAttribute("class","arr")
-		arr2.setAttribute("class","arr")
-		arr1.setAttribute("onClick","show("+(i>0?(i-1)%topics.length:topics.length-1)+")")
-		arr2.setAttribute("onClick","show("+((i+1)%topics.length)+")")
-		form_new.appendChild(arr1)
-		form_new.appendChild(arr2)
-		document.getElementById("page").replaceChild(form_new, form)
-		if(color === "rgb(84, 199, 105)")
-			{ parser(i) ;
-				document.getElementsByClassName("slider round")[0].style.background = "rgb(84, 199, 105)"
-			}
-
-			document.getElementById("menu").style.display="none"
-			document.getElementsByClassName("form")[0].style.display="block"
-			
-	//	var btn = document.createElement("button")
-	//	var b = document.getElementById("sub")
-	//	btn.setAttribute("id", "sub")
-	//	btn.style.display = "none"
-	//	btn.setAttribute("onClick", "parse("+(i)+"); return false;")
-	//	document.getElementById("sl").replaceChild(btn, b)
-	++flag;
-}
-
-function parser(i) {
+            .container .left-part  li {
+                padding-top: 20px;
+                padding-left: 4px;
+            }
 
 
-	var bodyog = body[i]
-//    var final = []
-//    body.forEach((str) => final = final.concat(str.split(" ")))
-//      console.log("{{body|escapejs}}")
+            .divider-below {
+                border: 1px solid #efefef;
+                width: 842px;
+                margin-top: 3px;
+            }
+            .social{
+                display: flex;
+            }
+            .content td {
+                display: flex;
+                padding-top: 9px;
+                padding-bottom: 9px;
+                font-size: 16px;
+            }
 
-newkeys = new Object;
-var k = 0;
-var kys = JSON.parse(keys[i])
-for(key in kys) {
-	var c = 'key'+k;
-	newkeys[c] = key;
-	bodyog = bodyog.replace(key, c);
-	k++;
-}
+            p.akash {
+                padding-left: 66px;
+            }
 
-bodyog = bodyog.split('\n');
+            p.test {
+                margin-left: 81px;
+            }
 
-document.getElementById("id_body").innerHTML = "";
-bodyog.forEach((s) => {
-	s.split(" ").forEach((str) => {
-		var bdy = document.getElementById("id_body");
-		str = str.replace(/[!"#%&'$()*.;,?]/g, "").trim();
-		if(str in newkeys) {
-			var button = document.createElement("button");
-			t =kys[newkeys[str]];
-			button.innerHTML = t;
-			button.setAttribute("class","spk")
-			bdy.appendChild(button);
-			let x = new SpeechSynthesisUtterance(newkeys[str]);
-			button.addEventListener("click", () => {
-				speechSynthesis.speak(x); 
-				event.preventDefault();
-			});
-			console.log(button)
-		}
-		else {
-			t = document.createTextNode(str);
-			bdy.appendChild(t);
-		}
-		space = document.createTextNode(" ");
-		bdy.appendChild(space);
-	})
-	var bdy = document.getElementById("id_body");
-	bdy.appendChild(document.createElement("br"));
-})
-}
+            p.date {
+                margin-left: 230px;
+            }
+            .divider-below-social {
+                border: 1px solid #efefef;
+                position: relative;
+                bottom: 11px;
+            }
+            .NewM {
+                background-color: #000;
+                height: 34px;
+                font-size: 16px;
+                color: #fff;
+                display: flex;
+                padding-top: 4px;
+                padding-bottom: 20px;
+                padding-left: 9px;
+            }
 
-function parse(i) {
-	console.log(body[i])
-	var form = document.getElementById("id_body")
-	var s = "" 
-	body[i].split("\n").forEach((str) => s+=str + "<br>")
-	if(document.getElementsByClassName("slider")[0].style.background != "salmon")
-	{
-		form.innerHTML = s
-		document.getElementsByClassName("slider")[0].style.background = "salmon"
-	}
-	else
-	{
-		parser(i)
-		document.getElementsByClassName("slider")[0].style.background = "#54c769"
-	}
-}
-document.getElementsByClassName('compose-button')[0].addEventListener("click", () => {
-		document.getElementById("menu").style.display="none"
-		document.getElementsByClassName("form")[0].style.display="block"
-	}
-)
-</script>
+            .bottom-form {
+                width: 30%;
+            }
+            form {
+                border: 1px solid #efefef;
+            }
+
+            input.recipient {
+                border: none;
+                border-bottom: 1px solid #efefef;
+                padding-right: 205px;
+            }
+
+            input.subject {
+                border: none;
+                border-bottom: 1px solid #efefef;
+                padding-right: 205px;
+                /* padding-bottom: 200px; */
+            }
+            input.textarea {
+                border: none;
+                padding-bottom: 200px;
+            }
+            .form-button {
+                background: #000;
+                height: 42px;
+            }
+
+            button.save {
+                margin-top: 11px;
+                background-color: white;
+                margin-left: 9px;
+                padding-left: 13px;
+                padding-right: 13px;
+                font-size: 16px;
+            }
+
+            button.vk {
+                  margin-top: 11px;
+                  background-color: white;
+                  margin-left: 9px;
+                  padding-left: 13px;
+                  padding-right: 13px;
+                  font-size: 16px;
+                  position: relative;
+                  left: 240px;
+            }
+            .bottom-form{
+                display:none
+            }
+            .bottom-form {
+                    position: relative;
+                    left: 68%;
+                    top: -56px;
+                }
+                .table-content-social{
+                    display:none;
+                }
+                .table-content-promotion{
+                    display:none;
+                }
+        </style>
+    {% endblock %}
+
+  </head>
+  <body>
+    <div class="top-container">
+        <div class="row">
+            <div class="col-2 left-section">
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+                <div class="menu-icon">
+                </div>
+                <div class="gmail-text">
+                    <h3><span><img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png" alt=""></span>
+<!--                    Gmail-->
+                    </h3>
+                </div>
+            </div>
+            <div class="col-8 center-section">
+               <input type="search" placeholder="Search Record">
+               <span><i class="bi bi-search"></i></span>
+               <i style="position:relative;left: -41px;" class="bi bi-caret-down-fill"></i>
+              
+            </div>
+            <div class="col-2 right-section">
+               <i class="glyphicon glyphicon-bell" style="padding-right: 9px;    font-size: 18px;"></i>
+               <i class="bi bi-gear" style="padding-right: 9px;    font-size: 18px;"></i>
+               <i class="bi bi-grid-3x3-gap-fill" style="padding-right: 9px;    font-size: 18px;"></i>
+               <i class="bi bi-person" style="padding-right: 9px;    font-size: 18px;"></i>
+             </div>
+        </div>
+    </div>
+        <div class="divider"></div>
+        <div class="container">
+            <div class="left-part">
+                <button class="button">+ Compose</button>
+                <ul>
+                   <li><i class="bi bi-inbox" style="padding-right: 10px;"></i> Inbox</li>
+                    <li ><i class="bi bi-star" style="padding-right: 10px;"></i></span>stared</li>
+                    <li ><i class="bi bi-clock-fill" style="padding-right: 10px;"></i></span>Snoozed</li>
+                    <li ><i class="bi bi-star" style="padding-right: 10px;"></i></span>Important</li>
+                    <li ><i class="bi bi-star" style="padding-right: 10px;"></i></span>Sent</li>
+                    <li ><i class="bi bi-star" style="padding-right: 10px;"></i></span>Draft</li>
+                    <li ><i class="bi bi-star" style="padding-right: 10px;"></i></span>More</li>
+                </ul>
+                <div class="bottom-icon">
+                    <i class="bi bi-person" style="padding-right: 6px;"></i>
+                    <i class="bi bi-camera-video-fill" style="padding-right: 6px;"></i>
+                    <i class="bi bi-telephone" style="padding-right: 6px;"></i>
+                </div>
+            </div>
+            <div class="right-part">
+                <div class="first-part">
+                    <input type="checkbox">
+                    <i class="bi bi-caret-down-fill"></i>
+                    <i class="far fa-redo-alt"></i>
+                    <img style="position:relative;top:-4px"src="{%static 'movebackward.png'%}" alt="">
+                    <i class="bi bi-three-dots-vertical"></i>
+                    <div class="divider-below"></div>
+                </div>
+                <div class="social">
+                    <p  class="primary active"style="padding-left: 40px;"><i class="bi bi-inbox" style="padding-right: 12px;"></i>Primary</p>
+                    <p class="social1 "style="padding-left: 40px;"><i class="bi bi-person" style="padding-right: 12px;"></i>Social</p>
+                    <p  class="promotion"style="padding-left: 40px;"><i class="bi bi-person" style="padding-right: 12px;"></i>Promotion</p>
+
+                </div>
+                <div class="divider-below-social"></div>
+                <div class="table-content-primary ">
+                    <table>
+                        <tbody id="table_content" >
+                        {% for mail in objects %}
+                            <tr class="content clickable-row" id="{{ mail.id }}" >
+                                <td>
+                                    <input type="checkbox">
+                                <i class="bi bi-star" style="padding-left: 10px;"></i>
+                                <p class="akash">{{mail.to}}</p>
+                                <p class="test">{{mail.subject}} - {{mail.message|slice:"0:12"}}</p>
+                                <p class="date">{{mail.createdAt | date}}</p>
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    </div>
+                    <div class="table-content-social">
+                        <table>
+                            <tbody>
+                                <tr class="content">
+                                    <td>
+                                        <input type="checkbox">
+                                    <i class="bi bi-star" style="padding-left: 10px;"></i>
+                                    <p class="akash">skash @gmail.com</p>
+                                    <p class="test">Test Email-Hi</p>
+                                    <p class="date">23 may 2020</p>
+                                    </td>
+                                    
+                                </tr>
+                                <tr><td>
+                                    <div class="divider-below"></div>
+                                </td></tr>
+                                <tr class="content">
+                                    <td>
+                                        <input type="checkbox">
+                                    <i class="bi bi-star" style="padding-left: 10px;"></i>
+                                    <p class="akash">akash@gmail.com</p>
+                                    <p class="test">Test Email-Hi</p>
+                                    <p class="date">23 may 2020</p>
+                                    </td>
+                                    
+                                </tr>
+                                <tr><td>
+                                    <div class="divider-below"></div>
+                                </td></tr>
+                                <tr class="content">
+                                    <td>
+                                        <input type="checkbox">
+                                    <i class="bi bi-star" style="padding-left: 10px;"></i>
+                                    <p class="akash">akash @gmail.com</p>
+                                    <p class="test">Test Email-Hi</p>
+                                    <p class="date">23 may 2020</p>
+                                    </td>
+                                    
+                                </tr>
+                                <tr><td>
+                                    <div class="divider-below"></div>
+                                </td></tr>
+                                <tr class="content">
+                                    <td>
+                                        <input type="checkbox">
+                                    <i class="bi bi-star" style="padding-left: 10px;"></i>
+                                    <p class="akash">akash @gmail.com</p>
+                                    <p class="test">Test Email-Hi</p>
+                                    <p class="date">23 may 2020</p>
+                                    </td>
+                                    
+                                </tr>
+                                <tr><td>
+                                    <div class="divider-below"></div>
+                                </td></tr>
+                                
+                            </tbody>
+                        </table>
+
+                    </div>
+                        <div class="table-content-promotion">
+                            <table>
+                                <tbody>
+                                    <tr class="content">
+                                        <td>
+                                            <input type="checkbox">
+                                        <i class="bi bi-star" style="padding-left: 10px;"></i>
+                                        <p class="akash">akash @gmail.com</p>
+                                        <p class="test">Test Email-Hi</p>
+                                        <p class="date">23 may 2020</p>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr><td>
+                                        <div class="divider-below"></div>
+                                    </td></tr>
+                                    <tr class="content">
+                                        <td>
+                                            <input type="checkbox">
+                                        <i class="bi bi-star" style="padding-left: 10px;"></i>
+                                        <p class="akash">pkash@gmail.com</p>
+                                        <p class="test">Test Email-Hi</p>
+                                        <p class="date">23 may 2020</p>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr><td>
+                                        <div class="divider-below"></div>
+                                    </td></tr>
+                                    <tr class="content">
+                                        <td>
+                                            <input type="checkbox">
+                                        <i class="bi bi-star" style="padding-left: 10px;"></i>
+                                        <p class="akash">akash @gmail.com</p>
+                                        <p class="test">Test Email-Hi</p>
+                                        <p class="date">23 may 2020</p>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr><td>
+                                        <div class="divider-below"></div>
+                                    </td></tr>
+                                    <tr class="content">
+                                        <td>
+                                            <input type="checkbox">
+                                        <i class="bi bi-star" style="padding-left: 10px;"></i>
+                                        <p class="akash">akash @gmail.com</p>
+                                        <p class="test">Test Email-Hi</p>
+                                        <p class="date">23 may 2020</p>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr><td>
+                                        <div class="divider-below"></div>
+                                    </td></tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="bottom-form">
+            <div class="NewM">
+                <p>New Message</p>
+                <p><i class="bi bi-x" style="position: relative; left: 250px;"></i></p>
+            </div>
+            <form action="">
+              <input class="recipient"type="text" placeholder="Recipient"><br>
+              <input class="subject" type="text" placeholder="subject">
+              <input class="textarea"type="textarea">
+              <div class="form-button">
+                <button class="save">save</button>
+                <button class="vk">Send</button>
+              </div>
+            </form>
+        </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  </body>
+</html>
 

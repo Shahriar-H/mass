@@ -1,0 +1,525 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"  src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {% block extrajs %}
+    <script type="application/javascript">
+        var time = 0;
+        function recordTime(restartTimer){
+            // record time at backend.
+            $.ajax({
+                url: 'recordTime/',
+                type: 'get',
+                success: function(data) {
+                    alert(data);
+                    if (restartTimer) {
+                        removeTimer();
+                        setTimer();
+                    } else {
+                        removeTimer();
+                    }
+                },
+                failure: function(data) {
+                    alert('Got an error dude');
+                }
+            });
+        }
+
+        function setTimer(){
+            timer = setInterval(()=> {
+                console.log(time)
+                time++;
+            }, 1000)
+        }
+
+        function removeTimer(){
+            clearTimeout(timer);
+        }
+
+        function show(i) {
+            setTimeout(() => {
+                parse(i);
+            }, 2);
+            var form = document.getElementsByClassName("form")[0];
+            // document.getElementsByClassName("slider")[0].style.background = "salmon"
+            var form_new = document.createElement("div")
+            form_new.setAttribute("class", "form")
+            var tl = document.createTextNode("Topic")
+            var bl = document.createTextNode("Body")
+            var topc = document.createElement("div")
+            var br = document.createElement("br")
+            topc.setAttribute("id", "id_topic")
+            topc.innerHTML = topics[i]
+            var bod = document.createElement("div")
+            var x = document.createElement("button")
+            x.setAttribute("class", "admin")
+            x.innerHTML = "Main Menu"
+            bod.setAttribute("id", "id_body")
+
+            bod.innerHTML = ""
+            body[i].split("\n").forEach((str) => bod.innerHTML += str + "<br>")
+
+            console.log(bod.innerHTML)
+            // form_new.appendChild(tl)
+            form_new.appendChild(topc)
+            form_new.appendChild(br)
+            form_new.appendChild(br)
+            // form_new.appendChild(bl)
+            form_new.appendChild(bod)
+            form_new.appendChild(x)
+            var arr1 = document.createElement("button")
+            var arr2 = document.createElement("button")
+            arr1.innerHTML = "<--"
+            arr2.innerHTML = "-->"
+            arr1.setAttribute("class", "arr")
+            arr2.setAttribute("class", "arr")
+            arr1.setAttribute("onClick", "show(" + (i > 0 ? (i - 1) % topics.length : topics.length - 1) + ")")
+            arr2.setAttribute("onClick", "show(" + ((i + 1) % topics.length) + ")")
+            form_new.appendChild(arr1)
+            form_new.appendChild(arr2)
+        }
+
+        function parser(i) {
+            var bodyog = body[i]
+            newkeys = new Object;
+            var k = 0;
+            var kys = JSON.parse(keys[i])
+            console.log(kys);
+            for (key in kys) {
+                var c = 'key' + k;
+                newkeys[c] = key;
+                bodyog = bodyog.replace(key, c);
+                k++;
+            }
+            bodyog = bodyog.split('\n');
+            console.log(bodyog)
+            document.getElementById("id_body").innerHTML = "";
+            bodyog.forEach((s) => {
+                s.split(" ").forEach((str) => {
+                    var bdy = document.getElementById("id_body");
+                    str = str.replace(/[!"#%&'$()*.;,?]/g, "").trim();
+                    console.log(str, newkeys)
+                    if (str in newkeys) {
+                        var button = document.createElement("button");
+                        t = kys[newkeys[str]];
+                        button.innerHTML = t;
+                        button.setAttribute("class", "spk")
+                        bdy.appendChild(button);
+                        let x = new SpeechSynthesisUtterance(newkeys[str]);
+                        button.addEventListener("click", () => {
+                            speechSynthesis.speak(x);
+                            event.preventDefault();
+                        });
+                        console.log(button)
+                    } else {
+                        t = document.createTextNode(str);
+                        bdy.appendChild(t);
+                    }
+                    space = document.createTextNode(" ");
+                    bdy.appendChild(space);
+                })
+                const bdy = document.getElementById("id_body");
+                bdy.appendChild(document.createElement("br"));
+            })
+        }
+
+        function parse(i) {
+            console.log(body[i], "Setting loader")
+            const form = document.getElementById("id_body");
+            let s = "";
+            body[i].split("\n").forEach((str) => s += str + "<br>")
+            parser(i)
+        }
+    </script>
+    <script>
+        jQuery(document).ready(function ($) {
+
+            document.getElementById("table_content").innerText = "{{body}}";
+
+            jQuery('.button').click(function () {
+                jQuery('.bottom-form').css("display", "block");
+            });
+        });
+
+    </script>
+
+    {% endblock %}
+    {% block extracss%}
+    <style>
+        {
+            padding: 0
+        ;
+            margin: 0
+        ;
+            box-sizing: border-box
+        ;
+            font-family: 'Times New Roman', Times, serif
+        ;
+            font-size: 16px
+        ;
+        }
+        .top-container {
+            margin-top: 6px;
+        }
+
+        .top-container .left-section .menu-icon {
+            width: 19px;
+            height: 2px;
+            background-color: black;
+            margin: 6px 6px;
+        }
+
+        .top-container img {
+            height: 20px;
+            padding-right: 11px;
+        }
+
+        .primary {
+            padding-left: 9px;
+            font-size: 16px;
+            padding-right: 20px;
+            padding-top: 9px;
+            padding-bottom: 12px;
+        }
+
+        .active {
+            background-color: #efefef;
+            color: red;
+            cursor: pointer;
+            border-bottom: 1px solid red;
+            border-width: 4px;
+        }
+
+        .primary:hover {
+            background-color: #efefef;
+            color: red;
+            cursor: pointer;
+            border-bottom: 1px solid red;
+            border-width: 4px;
+        }
+
+        .social1 {
+            padding-left: 9px;
+            font-size: 16px;
+            padding-right: 20px;
+            padding-top: 9px;
+            padding-bottom: 12px;
+        }
+
+        .social1:hover {
+            background-color: #efefef;
+            color: red;
+            cursor: pointer;
+            border-bottom: 1px solid green;
+            border-width: 4px;
+        }
+
+        .promotion {
+            padding-left: 9px;
+            font-size: 16px;
+            padding-right: 20px;
+            padding-top: 9px;
+            padding-bottom: 12px;
+        }
+
+        .promotion:hover {
+            background-color: #efefef;
+            color: red;
+            cursor: pointer;
+            border-bottom: 1px solid blue;
+            border-width: 4px;
+        }
+
+        .top-container .gmail-text {
+            position: relative;
+            top: -45px;
+            left: 43px;
+        }
+
+        i.bi.bi-search {
+            position: relative;
+            left: -725px;
+        }
+
+        .top-container input[type="search"] {
+            padding-right: 503px;
+            padding-left: 30px;
+            border: none;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            background-color: #efefef;
+        }
+
+        .divider {
+            border: 1px solid #efefef;
+            margin-top: -36px;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .container .right-part {
+            position: relative;
+            left: -75px;
+            width: 100%;
+            top: 11px;
+        }
+
+        .button {
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 16px;
+            font-size: 16px;
+        }
+
+        .button:focus {
+            outline: none !important;
+        }
+
+        .container .left-part {
+            width: 25%;
+            position: relative;
+            left: -82px;
+        }
+
+        .container .left-part ul {
+            list-style-type: none;
+            margin-top: -7px;
+        }
+
+        .container .left-part li {
+            padding-top: 20px;
+            padding-left: 4px;
+        }
+
+
+        .divider-below {
+            border: 1px solid #efefef;
+            width: 842px;
+            margin-top: 3px;
+        }
+
+        .social {
+            display: flex;
+        }
+
+        .content td {
+            display: flex;
+            padding-top: 9px;
+            padding-bottom: 9px;
+            font-size: 16px;
+        }
+
+        p.akash {
+            padding-left: 66px;
+        }
+
+        p.test {
+            margin-left: 81px;
+        }
+
+        p.date {
+            margin-left: 230px;
+        }
+
+        .divider-below-social {
+            border: 1px solid #efefef;
+            position: relative;
+            bottom: 11px;
+        }
+
+        .NewM {
+            background-color: #000;
+            height: 34px;
+            font-size: 16px;
+            color: #fff;
+            display: flex;
+            padding-top: 4px;
+            padding-bottom: 20px;
+            padding-left: 9px;
+        }
+
+        .bottom-form {
+            width: 30%;
+        }
+
+        form {
+            border: 1px solid #efefef;
+        }
+
+        input.recipient {
+            border: none;
+            border-bottom: 1px solid #efefef;
+            padding-right: 205px;
+        }
+
+        input.subject {
+            border: none;
+            border-bottom: 1px solid #efefef;
+            padding-right: 205px;
+            /* padding-bottom: 200px; */
+        }
+
+        input.textarea {
+            border: none;
+            padding-bottom: 200px;
+        }
+
+        .form-button {
+            background: #000;
+            height: 42px;
+        }
+
+        button.save {
+            margin-top: 11px;
+            background-color: white;
+            margin-left: 9px;
+            padding-left: 13px;
+            padding-right: 13px;
+            font-size: 16px;
+        }
+
+        button.vk {
+            margin-top: 11px;
+            background-color: white;
+            margin-left: 9px;
+            padding-left: 13px;
+            padding-right: 13px;
+            font-size: 16px;
+            position: relative;
+            left: 240px;
+        }
+
+        .bottom-form {
+            display: none
+        }
+
+        .bottom-form {
+            position: relative;
+            left: 68%;
+            top: -56px;
+        }
+
+        .table-content-social {
+            display: none;
+        }
+
+        .table-content-promotion {
+            display: none;
+        }
+    </style>
+    {% endblock %}
+
+</head>
+<body>
+<div class="top-container">
+    <div class="row">
+        <div class="col-2 left-section">
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+            <div class="menu-icon">
+            </div>
+            <div class="gmail-text">
+                <h3><span><img alt=""
+                               src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png"></span>
+                    <!--                    Gmail-->
+                </h3>
+            </div>
+        </div>
+        <div class="col-8 center-section">
+            <input placeholder="search Record" type="search">
+            <span><i class="bi bi-search"></i></span>
+            <i class="bi bi-caret-down-fill" style="position:relative;left: -41px;"></i>
+
+        </div>
+        <div class="col-2 right-section">
+            <i class="glyphicon glyphicon-bell" style="padding-right: 9px;    font-size: 18px;"></i>
+            <i class="bi bi-gear" style="padding-right: 9px;    font-size: 18px;"></i>
+            <i class="bi bi-grid-3x3-gap-fill" style="padding-right: 9px;    font-size: 18px;"></i>
+            <i class="bi bi-person" style="padding-right: 9px;    font-size: 18px;"></i>
+        </div>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="container">
+    <div class="left-part">
+        <button class="button">+ Compose</button>
+        <ul>
+            <li><i class="bi bi-inbox" style="padding-right: 10px;"></i> Inbox</li>
+            <li><i class="bi bi-star" style="padding-right: 10px;"></i></span>stared</li>
+            <li><i class="bi bi-clock-fill" style="padding-right: 10px;"></i></span>Snoozed</li>
+            <li><i class="bi bi-star" style="padding-right: 10px;"></i></span>Important</li>
+            <li><i class="bi bi-star" style="padding-right: 10px;"></i></span>Sent</li>
+            <li><i class="bi bi-star" style="padding-right: 10px;"></i></span>Draft</li>
+            <li><i class="bi bi-star" style="padding-right: 10px;"></i></span>More</li>
+        </ul>
+        <div class="bottom-icon">
+            <i class="bi bi-person" style="padding-right: 6px;"></i>
+            <i class="bi bi-camera-video-fill" style="padding-right: 6px;"></i>
+            <i class="bi bi-telephone" style="padding-right: 6px;"></i>
+        </div>
+    </div>
+    <div class="right-part">
+        <div class="first-part">
+            <input type="checkbox">
+            <i class="bi bi-caret-down-fill"></i>
+            <i class="far fa-redo-alt"></i>
+            <img alt="" src="{%static 'movebackward.png'%}" style="position:relative;top:-4px">
+            <i class="bi bi-three-dots-vertical"></i>
+            <div class="divider-below"></div>
+        </div>
+        <div class="social">
+            <p class="" style="padding-left: 40px;">{{detail.subject}}</p>
+
+        </div>
+        <div class="divider-below-social"></div>
+        <div class="table-content-primary ">
+            <table>
+                <tbody id="table_content">
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+</div>
+<div class="bottom-form">
+    <div class="NewM">
+        <p>New Message</p>
+        <p><i class="bi bi-x" style="position: relative; left: 250px;"></i></p>
+    </div>
+    <form action="">
+        <input class="recipient" placeholder="Recipient" type="text"><br>
+        <input class="subject" placeholder="subject" type="text">
+        <input class="textarea" type="textarea">
+        <div class="form-button">
+            <button class="save">save</button>
+            <button class="vk">Send</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+

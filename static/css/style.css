@@ -1,0 +1,239 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+    font-size:16px;
+}
+.top-container {
+    margin-top: 6px;
+}
+.top-container .left-section .menu-icon {
+    width: 19px;
+    height: 2px;
+    background-color: black;
+    margin: 6px 6px;
+}
+.top-container img {
+    height: 20px;
+    padding-right: 11px;
+}
+.primary{
+    padding-left: 9px;
+    font-size: 16px;
+    padding-right: 20px;
+    padding-top: 9px;
+    padding-bottom: 12px;
+}
+.active{
+    background-color:#efefef;
+    color: red;
+    cursor: pointer;
+    border-bottom: 1px solid red;
+    border-width: 4px;
+}
+.primary:hover{
+    background-color: #efefef;
+    color: red;
+    cursor: pointer;
+    border-bottom: 1px solid red;
+    border-width: 4px;
+}
+.social1{
+    padding-left: 9px;
+    font-size:16px;
+    padding-right: 20px;
+    padding-top: 9px;
+    padding-bottom: 12px;
+}
+.social1:hover{
+    background-color: #efefef;
+    color: red;
+    cursor: pointer;
+    border-bottom: 1px solid green;
+    border-width: 4px;
+}
+.promotion{
+    padding-left: 9px;
+    font-size:16px;
+    padding-right: 20px;
+    padding-top: 9px;
+    padding-bottom: 12px;
+}
+.promotion:hover{
+    background-color: #efefef;
+    color: red;
+    cursor: pointer;
+    border-bottom: 1px solid blue;
+    border-width: 4px;
+}
+
+.top-container .gmail-text {
+    position: relative;
+    top: -45px;
+    left: 43px;
+}
+i.bi.bi-search {
+    position: relative;
+    left: -725px;
+}
+
+.top-container input[type="search"] {
+    padding-right: 503px;
+    padding-left: 30px;
+    border: none;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: #efefef;
+}
+.divider {
+    border: 1px solid #efefef;
+    margin-top: -36px;
+}
+.container{
+    display: flex;
+    margin-top: 10px;
+}
+.container .right-part {
+    position: relative;
+    left: -75px;
+    width: 100%;
+    top: 11px;
+}
+.button {
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+    font-size: 16px;
+  }
+  .button:focus{
+      outline:none !important;
+  }
+
+  .container .left-part {
+    width: 25%;
+    position: relative;
+    left: -82px;
+}
+
+.container .left-part  ul {
+    list-style-type: none;
+    margin-top: -7px;
+}
+
+.container .left-part  li {
+    padding-top: 20px;
+    padding-left: 4px;
+}
+
+
+.divider-below {
+    border: 1px solid #efefef;
+    border-width: 1px;
+    width: 842px;
+    margin-top: 3px;
+}
+.social{
+    display: flex;
+}
+.content td {
+    display: flex;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    font-size: 16px;
+}
+
+p.akash {
+    padding-left: 66px;
+}
+
+p.test {
+    margin-left: 81px;
+}
+
+p.date {
+    margin-left: 230px;
+}
+.divider-below-social {
+    border: 1px solid #efefef;
+    position: relative;
+    bottom: 11px;
+}
+.NewM {
+    background-color: #000;
+    height: 34px;
+    font-size: 16px;
+    color: #fff;
+    display: flex;
+    padding-top: 4px;
+    padding-bottom: 20px;
+    padding-left: 9px;
+}
+
+.bottom-form {
+    width: 30%;
+}
+form {
+    border: 1px solid #efefef;
+}
+
+input.recipient {
+    border: none;
+    border-bottom: 1px solid #efefef;
+    padding-right: 205px;
+}
+
+input.subject {
+    border: none;
+    border-bottom: 1px solid #efefef;
+    padding-right: 205px;
+    /* padding-bottom: 200px; */
+}
+input.textarea {
+    border: none;
+    padding-bottom: 200px;
+}
+.form-button {
+    background: #000;
+    height: 42px;
+}
+
+button.save {
+    margin-top: 11px;
+    background-color: blue;
+    margin-left: 9px;
+    padding-left: 13px;
+    padding-right: 13px;
+    font-size: 16px;
+}
+
+button.vk {
+      margin-top: 11px;
+      background-color: blue;
+      margin-left: 9px;
+      padding-left: 13px;
+      padding-right: 13px;
+      font-size: 16px;
+      position: relative;
+      left: 240px;
+}
+.bottom-form{
+    display:none
+}
+.bottom-form {
+        position: relative;
+        left: 68%;
+        top: -56px;
+    }
+    .table-content-social{
+        display:none;
+    }
+    .table-content-promotion{
+        display:none;
+    }
