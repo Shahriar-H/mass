@@ -1,5 +1,6 @@
 import json
 
+from django import template
 from django.shortcuts import render
 
 from textparse.models import Data
@@ -46,20 +47,24 @@ def index(request):
 
 def detail(request):
     data = Messages.objects.filter(id=request.GET.get('id')).first()
+    data_keys = Messages.objects.values('id')
+    print(data_keys)
     if data is not None:
         body = data.message
-        result = Data.objects.all()
-        topics = [obj.topic for obj in result]
-        parsed = [obj.parsed for obj in result]
-        keys_all = [obj.keys for obj in result]
-
+        record_keys = [obj.get('id') for obj in data_keys]
+        # result = Data.objects.all()
+        # topics = [obj.topic for obj in result]
+        # parsed = [obj.parsed for obj in result]
+        # keys_all = [obj.keys for obj in result]
         return render(request, 'textparse/detail.html',
                       {'detail': data,
-                       'keys': keys_all,
-                       'topics': topics,
+                       # 'keys': keys_all,
+                       # 'topics': topics,
                        'body': body,
-                       'parsed': parsed,
-                       'oc': 'green', 'color': 'red', 'id': request.GET.get('id')
+                       # 'parsed': parsed,
+                       # 'oc': 'green', 'color': 'red',
+                       'id': request.GET.get('id'),
+                       'record_keys': record_keys
                        })
 
 
@@ -69,3 +74,11 @@ def save_data(request):
                                  keys=data.get('keys'))
     return {'status': 1, 'message': 'Record saved successfully'}
 
+
+register = template.Library()
+
+
+@register.filter
+def add_str(arg1, arg2):
+    """concatenate arg1 & arg2"""
+    return str(arg1) + str(arg2)

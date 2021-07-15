@@ -230,7 +230,7 @@
                 font-size: 16px;
             }
 
-            p.akash {
+            p.mail-to {
                 padding-left: 66px;
             }
 
@@ -239,7 +239,7 @@
             }
 
             p.date {
-                margin-left: 230px;
+
             }
             .divider-below-social {
                 border: 1px solid #efefef;
@@ -393,8 +393,8 @@
                                 <td>
                                     <input type="checkbox">
                                 <i class="bi bi-star" style="padding-left: 10px;"></i>
-                                <p class="akash">{{mail.to}}</p>
-                                <p class="test">{{mail.subject}} - {{mail.message|slice:"0:12"}}</p>
+                                <p class="mail-to">{{mail.to}}</p>
+                                <p class="test">{{mail.subject|add:" "|add:mail.message|slice:"0:20"}}</p>
                                 <p class="date">{{mail.createdAt | date}}</p>
                                 </td>
 
@@ -408,59 +408,7 @@
                     <div class="table-content-social">
                         <table>
                             <tbody>
-                                <tr class="content">
-                                    <td>
-                                        <input type="checkbox">
-                                    <i class="bi bi-star" style="padding-left: 10px;"></i>
-                                    <p class="akash">skash @gmail.com</p>
-                                    <p class="test">Test Email-Hi</p>
-                                    <p class="date">23 may 2020</p>
-                                    </td>
-                                    
-                                </tr>
-                                <tr><td>
-                                    <div class="divider-below"></div>
-                                </td></tr>
-                                <tr class="content">
-                                    <td>
-                                        <input type="checkbox">
-                                    <i class="bi bi-star" style="padding-left: 10px;"></i>
-                                    <p class="akash">akash@gmail.com</p>
-                                    <p class="test">Test Email-Hi</p>
-                                    <p class="date">23 may 2020</p>
-                                    </td>
-                                    
-                                </tr>
-                                <tr><td>
-                                    <div class="divider-below"></div>
-                                </td></tr>
-                                <tr class="content">
-                                    <td>
-                                        <input type="checkbox">
-                                    <i class="bi bi-star" style="padding-left: 10px;"></i>
-                                    <p class="akash">akash @gmail.com</p>
-                                    <p class="test">Test Email-Hi</p>
-                                    <p class="date">23 may 2020</p>
-                                    </td>
-                                    
-                                </tr>
-                                <tr><td>
-                                    <div class="divider-below"></div>
-                                </td></tr>
-                                <tr class="content">
-                                    <td>
-                                        <input type="checkbox">
-                                    <i class="bi bi-star" style="padding-left: 10px;"></i>
-                                    <p class="akash">akash @gmail.com</p>
-                                    <p class="test">Test Email-Hi</p>
-                                    <p class="date">23 may 2020</p>
-                                    </td>
-                                    
-                                </tr>
-                                <tr><td>
-                                    <div class="divider-below"></div>
-                                </td></tr>
-                                
+
                             </tbody>
                         </table>
 
@@ -468,59 +416,7 @@
                         <div class="table-content-promotion">
                             <table>
                                 <tbody>
-                                    <tr class="content">
-                                        <td>
-                                            <input type="checkbox">
-                                        <i class="bi bi-star" style="padding-left: 10px;"></i>
-                                        <p class="akash">akash @gmail.com</p>
-                                        <p class="test">Test Email-Hi</p>
-                                        <p class="date">23 may 2020</p>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr><td>
-                                        <div class="divider-below"></div>
-                                    </td></tr>
-                                    <tr class="content">
-                                        <td>
-                                            <input type="checkbox">
-                                        <i class="bi bi-star" style="padding-left: 10px;"></i>
-                                        <p class="akash">pkash@gmail.com</p>
-                                        <p class="test">Test Email-Hi</p>
-                                        <p class="date">23 may 2020</p>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr><td>
-                                        <div class="divider-below"></div>
-                                    </td></tr>
-                                    <tr class="content">
-                                        <td>
-                                            <input type="checkbox">
-                                        <i class="bi bi-star" style="padding-left: 10px;"></i>
-                                        <p class="akash">akash @gmail.com</p>
-                                        <p class="test">Test Email-Hi</p>
-                                        <p class="date">23 may 2020</p>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr><td>
-                                        <div class="divider-below"></div>
-                                    </td></tr>
-                                    <tr class="content">
-                                        <td>
-                                            <input type="checkbox">
-                                        <i class="bi bi-star" style="padding-left: 10px;"></i>
-                                        <p class="akash">akash @gmail.com</p>
-                                        <p class="test">Test Email-Hi</p>
-                                        <p class="date">23 may 2020</p>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr><td>
-                                        <div class="divider-below"></div>
-                                    </td></tr>
-                                    
+
                                 </tbody>
                             </table>
                         </div>

@@ -34,7 +34,7 @@
                     }
                 },
                 failure: function(data) {
-                    alert('Got an error dude');
+                    alert('Got an error');
                 }
             });
         }
@@ -51,11 +51,21 @@
         }
 
         function seekForward(){
-
+            let keys = {{record_keys | safe}}
+            let id = {{id | safe}}
+            let index = keys.indexOf(id.toString())
+            if (index != -1 && index < (keys.length - 1)){
+                window.location = '../detail/?id=' + keys[index + 1]
+            }
         }
 
         function seekBackward(){
-
+            let keys = {{record_keys | safe}}
+            let id = {{id | safe}}
+            let index = keys.indexOf(id.toString())
+            if (index != -1 && index > 0){
+                window.location = '../detail/?id=' + keys[index - 1]
+            }
         }
 
         function show(i) {
@@ -340,18 +350,6 @@
             font-size: 16px;
         }
 
-        p.akash {
-            padding-left: 66px;
-        }
-
-        p.test {
-            margin-left: 81px;
-        }
-
-        p.date {
-            margin-left: 230px;
-        }
-
         .divider-below-social {
             border: 1px solid #efefef;
             position: relative;
@@ -496,8 +494,8 @@
             <i class="far fa-redo-alt"></i>
             <img alt="" src="{%static 'movebackward.png'%}" style="position:relative;top:-4px">
             <i class="bi bi-three-dots-vertical"></i>
-            <a href="javascript:seekBackward()"> <i class="bi bi-chevron-left"></i> </a>
-            <a href="javascript:seekForward()"> <i class="bi bi-chevron-right"></i> </a>
+            <a href="javascript:seekBackward()"><i class="bi bi-chevron-left"></i></a>
+            <a href="javascript:seekForward()"><i class="bi bi-chevron-right"></i></a>
             <div class="divider-below"></div>
         </div>
         <div style="padding: 10px"> <i class="bi bi-trash"></i> </div>

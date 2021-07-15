@@ -3,3 +3,9 @@
 .idea/Project_3_Text_parsing_master.iml
 textparse/__pycache__/forms.cpython-38.pyc
 textparse/__pycache__/models.cpython-38.pyc
+.idea/jsLibraryMappings.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/Project_Default.xml
+textparse/__pycache__/forms.cpython-38.pyc
+.gitignore
