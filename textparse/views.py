@@ -1,10 +1,11 @@
+import datetime
 import json
 
 from django import template
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
 from textparse.models import Data
-from textparse.models import Messages
+from textparse.models import Messages, Records
 from .forms import InputText
 from .parse import parse
 
@@ -12,73 +13,73 @@ from .parse import parse
 # Create your views here.
 def index(request):
     objects = Messages.objects.all()
+
     data = Data.objects.all()
     topics = [obj.topic for obj in data]
     body = [obj.body for obj in data]
     parsed = [obj.parsed for obj in data]
     keys_all = [obj.keys for obj in data]
-
     print(keys_all)
     if request.method == "POST":
         form = InputText(request.POST)
-        if form.is_valid():
-            topic = form.cleaned_data['topic']
-            body = form.cleaned_data['body']
-            keys, final = parse(body)
-            keys = json.dumps(keys)
-            data = Data.objects.create(topic=topic, body=body, parsed=final, keys=keys)
-            final = {"top": "Topic", "topic": topic, "bod": "Body", "final": final}
-            return render(request, 'textparse/index1.html',
-                          {'topics': topics, 'body': body, 'parsed': parsed, 'b': body, 'oc': 'red', 'color': 'green',
-                           'keys': keys, 'final': final})
-    else:
-        form = InputText()
+        print('saving data')
+        print(request.POST.get('content'))
+        print(request.POST.get('subject'))
+        # if form.is_valid():
+        #     print('saving data1')
+        topic = request.POST.get('subject')
+        body = request.POST.get('content')
+        keys, final = parse(body)
+        keys = json.dumps(keys)
+        data = Data.objects.create(topic=topic, body=body, parsed=final, keys=keys)
+        final = {"top": "Topic", "topic": topic, "bod": "Body", "final": final}
+        return render(request, 'textparse/index.html',
+                      {'topics': topics, 'body': body, 'parsed': parsed, 'b': body, 'oc': 'red', 'color': 'green',
+                       'keys': keys, 'final': final, 'objects': objects})
 
-    return render(request, 'textparse/index.html',
-                  {
-                      'keys': keys_all,
-                      'topics': topics,
-                      'body': body,
-                      'parsed': parsed,
-                      'oc': 'green', 'color': 'red',
-                      'form': form,
-                      'objects': objects})
+    # else:
+    #     form = InputText()
+    else:
+        return render(request, 'textparse/index.html',
+                      {
+                          'keys': keys_all,
+                          'topics': topics,
+                          'body': body,
+                          'parsed': parsed,
+                          'oc': 'green', 'color': 'red',
+                          'objects': objects})
 
 
 def detail(request):
     data = Messages.objects.filter(id=request.GET.get('id')).first()
     data_keys = Messages.objects.values('id')
-    print(data_keys)
+
     if data is not None:
-        body = data.message
+        mail_body = data.message
         record_keys = [obj.get('id') for obj in data_keys]
-        # result = Data.objects.all()
-        # topics = [obj.topic for obj in result]
-        # parsed = [obj.parsed for obj in result]
-        # keys_all = [obj.keys for obj in result]
+        result = Data.objects.all()
+        topics = [obj.topic for obj in result]
+        parsed = [obj.parsed for obj in result]
+        keys_all = [obj.keys for obj in result]
+        body = [obj.body for obj in result]
+        print(keys_all)
         return render(request, 'textparse/detail.html',
                       {'detail': data,
-                       # 'keys': keys_all,
-                       # 'topics': topics,
+                       'keys_all': keys_all,
+                       'topics': topics,
                        'body': body,
-                       # 'parsed': parsed,
-                       # 'oc': 'green', 'color': 'red',
+                       'mail_body': mail_body,
+                       'parsed': parsed,
+                       'oc': 'green', 'color': 'red',
                        'id': request.GET.get('id'),
                        'record_keys': record_keys
                        })
 
 
-def save_data(request):
-    data = request.POST
-    record = Data.objects.create(topic=data.get('subject'), body=data.get('content'), parsed=data.get('content'),
-                                 keys=data.get('keys'))
-    return {'status': 1, 'message': 'Record saved successfully'}
-
-
-register = template.Library()
-
-
-@register.filter
-def add_str(arg1, arg2):
-    """concatenate arg1 & arg2"""
-    return str(arg1) + str(arg2)
+def save_record(request):
+    duration = datetime.timedelta(seconds=int(request.GET.get('time')))
+    now = datetime.datetime.now()
+    end_time = now
+    start_time = end_time - duration
+    record = Records.objects.create(startTime=start_time, endTime=end_time)
+    return HttpResponse(200)

@@ -19,19 +19,13 @@
       <script>
           function submitData() {
             $.ajax({
-                url: 'save_data',
-                type: 'get',
+                url: '/',
+                type: 'post',
                 success: function(data) {
                     alert(data);
-                    if (restartTimer) {
-                        removeTimer();
-                        setTimer();
-                    } else {
-                        removeTimer();
-                    }
                 },
                 failure: function(data) {
-                    alert('Got an error dude');
+                    alert('Got an error');
                 }
             });
           }
@@ -228,10 +222,11 @@
                 padding-top: 9px;
                 padding-bottom: 9px;
                 font-size: 16px;
+                justify-content: space-around;
             }
 
             p.mail-to {
-                padding-left: 66px;
+                padding-left: 50px;
             }
 
             p.test {
@@ -239,7 +234,7 @@
             }
 
             p.date {
-
+                padding-left: 200px;
             }
             .divider-below-social {
                 border: 1px solid #efefef;
@@ -394,7 +389,7 @@
                                     <input type="checkbox">
                                 <i class="bi bi-star" style="padding-left: 10px;"></i>
                                 <p class="mail-to">{{mail.to}}</p>
-                                <p class="test">{{mail.subject|add:" "|add:mail.message|slice:"0:20"}}</p>
+                                <p class="test">{{mail.subject|add:" "|add:mail.message|add:"         "|slice:"0:28 "}}</p>
                                 <p class="date">{{mail.createdAt | date}}</p>
                                 </td>
 
@@ -429,7 +424,7 @@
                 <p>New Message</p>
                 <p><i class="bi bi-x" style="position: relative; left: 250px;"></i></p>
             </div>
-            <form action="save_data/"method="post">
+            <form action="/" method="post">
                 {% csrf_token %}
                 <input name="recipient" class="recipient" placeholder="Recipient" type="text"><br>
                 <input name="subject" class="subject" placeholder="subject" type="text">

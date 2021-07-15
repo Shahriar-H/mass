@@ -19,13 +19,13 @@
     <script type="application/javascript">
         var time = 0;
         var id = 0;
+
         function recordTime(restartTimer){
             // record time at backend.
             $.ajax({
-                url: 'recordTime?time=' + time + "&id=" + {{id}},
+                url: '../save_record?time=' + time,
                 type: 'get',
                 success: function(data) {
-                    alert(data);
                     if (restartTimer) {
                         removeTimer();
                         setTimer();
@@ -39,7 +39,13 @@
             });
         }
 
+        function goHome(){
+            recordTime(true);
+            window.location = "/"
+        }
+
         function setTimer(){
+            time = 0;
             timer = setInterval(()=> {
                 console.log(time)
                 time++;
@@ -55,6 +61,7 @@
             let id = {{id | safe}}
             let index = keys.indexOf(id.toString())
             if (index != -1 && index < (keys.length - 1)){
+                recordTime(true);
                 window.location = '../detail/?id=' + keys[index + 1]
             }
         }
@@ -64,6 +71,7 @@
             let id = {{id | safe}}
             let index = keys.indexOf(id.toString())
             if (index != -1 && index > 0){
+                recordTime(true);
                 window.location = '../detail/?id=' + keys[index - 1]
             }
         }
@@ -72,10 +80,6 @@
             setTimeout(() => {
                 parse(i);
             }, 2);
-            var form = document.getElementsByClassName("form")[0];
-            // document.getElementsByClassName("slider")[0].style.background = "salmon"
-            var form_new = document.createElement("div")
-            form_new.setAttribute("class", "form")
             var tl = document.createTextNode("Topic")
             var bl = document.createTextNode("Body")
             var topc = document.createElement("div")
@@ -92,13 +96,6 @@
             body[i].split("\n").forEach((str) => bod.innerHTML += str + "<br>")
 
             console.log(bod.innerHTML)
-            // form_new.appendChild(tl)
-            form_new.appendChild(topc)
-            form_new.appendChild(br)
-            form_new.appendChild(br)
-            // form_new.appendChild(bl)
-            form_new.appendChild(bod)
-            form_new.appendChild(x)
             var arr1 = document.createElement("button")
             var arr2 = document.createElement("button")
             arr1.innerHTML = "<--"
@@ -107,15 +104,14 @@
             arr2.setAttribute("class", "arr")
             arr1.setAttribute("onClick", "show(" + (i > 0 ? (i - 1) % topics.length : topics.length - 1) + ")")
             arr2.setAttribute("onClick", "show(" + ((i + 1) % topics.length) + ")")
-            form_new.appendChild(arr1)
-            form_new.appendChild(arr2)
         }
 
         function parser(i) {
             var bodyog = body[i]
             newkeys = new Object;
             var k = 0;
-            var kys = JSON.parse(keys[i])
+            console.log(keys_all[i]);
+            var kys = JSON.parse(keys_all[i])
             console.log(kys);
             for (key in kys) {
                 var c = 'key' + k;
@@ -125,10 +121,9 @@
             }
             bodyog = bodyog.split('\n');
             console.log(bodyog)
-            document.getElementById("id_body").innerHTML = "";
             bodyog.forEach((s) => {
                 s.split(" ").forEach((str) => {
-                    var bdy = document.getElementById("id_body");
+                    var bdy = document.getElementById("body_content");
                     str = str.replace(/[!"#%&'$()*.;,?]/g, "").trim();
                     console.log(str, newkeys)
                     if (str in newkeys) {
@@ -150,14 +145,13 @@
                     space = document.createTextNode(" ");
                     bdy.appendChild(space);
                 })
-                const bdy = document.getElementById("id_body");
+                const bdy = document.getElementById("body_content");
                 bdy.appendChild(document.createElement("br"));
             })
         }
 
         function parse(i) {
             console.log(body[i], "Setting loader")
-            const form = document.getElementById("id_body");
             let s = "";
             body[i].split("\n").forEach((str) => s += str + "<br>")
             parser(i)
@@ -166,11 +160,19 @@
     <script>
         jQuery(document).ready(function ($) {
 
-            document.getElementById("table_content").innerText = "{{body}}";
+            setTimer();
+            document.getElementById("table_content").innerText = "{{mail_body}}";
 
             jQuery('.button').click(function () {
                 jQuery('.bottom-form').css("display", "block");
             });
+            topics = {{topics | safe}}
+            body = {{body | safe}}
+            parsed = {{parsed | safe}}
+            keys_all = {{ keys_all | safe }}
+            for(let i=0; i<topics.length; i++) {
+                parse(i);
+            }
         });
 
     </script>
@@ -179,16 +181,11 @@
     {% block extracss%}
     <style>
         {
-            padding: 0
-        ;
-            margin: 0
-        ;
-            box-sizing: border-box
-        ;
-            font-family: 'Times New Roman', Times, serif
-        ;
-            font-size: 16px
-        ;
+            padding: 0  ;
+            margin: 0  ;
+            box-sizing: border-box  ;
+            font-family: 'Times New Roman', Times, serif  ;
+            font-size: 16px  ;
         }
         .top-container {
             margin-top: 6px;
@@ -473,7 +470,7 @@
     <div class="left-part">
         <button class="button">+ Compose</button>
         <ul>
-            <li><a href="/"><i class="bi bi-inbox" style="padding-right: 10px;"></i> Inbox</a></li>
+            <li><a href="javascript:goHome()"><i class="bi bi-inbox" style="padding-right: 10px;"></i> Inbox</a></li>
             <li><i class="bi bi-star" style="padding-right: 10px;"></i></span>stared</li>
             <li><i class="bi bi-clock-fill" style="padding-right: 10px;"></i></span>Snoozed</li>
             <li><i class="bi bi-star" style="padding-right: 10px;"></i></span>Important</li>
@@ -504,7 +501,7 @@
             <h5 class="" style="padding-bottom: 10px;">Subject: {{detail.subject}}</h5>
         </div>
         <div class="divider-below-social"></div>
-        <div class="table-content-primary ">
+        <div id="body_content" class="table-content-primary ">
             <table>
                 <tbody id="table_content">
                 </tbody>

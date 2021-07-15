@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 
@@ -23,3 +25,14 @@ class Messages(models.Model):
         managed = False
         db_table = 'Messages'
 
+
+class Records(models.Model):
+    id = models.AutoField(db_column='_id', primary_key=True)
+    startTime = models.DateTimeField()
+    endTime = models.DateTimeField()
+    createdAt = models.DateTimeField(default=datetime.datetime.now())
+    updatedAt = models.DateTimeField(default=datetime.datetime.now())
+
+    class Meta:
+        managed = False
+        db_table = 'Records'
