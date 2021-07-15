@@ -40,7 +40,7 @@ def index(request):
                       'body': body,
                       'parsed': parsed,
                       'oc': 'green', 'color': 'red',
-                      # 'form': form,
+                      'form': form,
                       'objects': objects})
 
 
@@ -59,5 +59,13 @@ def detail(request):
                        'topics': topics,
                        'body': body,
                        'parsed': parsed,
-                       'oc': 'green', 'color': 'red',
+                       'oc': 'green', 'color': 'red', 'id': request.GET.get('id')
                        })
+
+
+def save_data(request):
+    data = request.POST
+    record = Data.objects.create(topic=data.get('subject'), body=data.get('content'), parsed=data.get('content'),
+                                 keys=data.get('keys'))
+    return {'status': 1, 'message': 'Record saved successfully'}
+

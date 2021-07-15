@@ -18,10 +18,11 @@
     {% block extrajs %}
     <script type="application/javascript">
         var time = 0;
+        var id = 0;
         function recordTime(restartTimer){
             // record time at backend.
             $.ajax({
-                url: 'recordTime/',
+                url: 'recordTime?time=' + time + "&id=" + {{id}},
                 type: 'get',
                 success: function(data) {
                     alert(data);
@@ -47,6 +48,14 @@
 
         function removeTimer(){
             clearTimeout(timer);
+        }
+
+        function seekForward(){
+
+        }
+
+        function seekBackward(){
+
         }
 
         function show(i) {
@@ -466,7 +475,7 @@
     <div class="left-part">
         <button class="button">+ Compose</button>
         <ul>
-            <li><i class="bi bi-inbox" style="padding-right: 10px;"></i> Inbox</li>
+            <li><a href="/"><i class="bi bi-inbox" style="padding-right: 10px;"></i> Inbox</a></li>
             <li><i class="bi bi-star" style="padding-right: 10px;"></i></span>stared</li>
             <li><i class="bi bi-clock-fill" style="padding-right: 10px;"></i></span>Snoozed</li>
             <li><i class="bi bi-star" style="padding-right: 10px;"></i></span>Important</li>
@@ -487,11 +496,14 @@
             <i class="far fa-redo-alt"></i>
             <img alt="" src="{%static 'movebackward.png'%}" style="position:relative;top:-4px">
             <i class="bi bi-three-dots-vertical"></i>
+            <a href="javascript:seekBackward()"> <i class="bi bi-chevron-left"></i> </a>
+            <a href="javascript:seekForward()"> <i class="bi bi-chevron-right"></i> </a>
             <div class="divider-below"></div>
         </div>
-        <div class="social">
-            <p class="" style="padding-left: 40px;">{{detail.subject}}</p>
+        <div style="padding: 10px"> <i class="bi bi-trash"></i> </div>
 
+        <div class="social">
+            <h5 class="" style="padding-bottom: 10px;">Subject: {{detail.subject}}</h5>
         </div>
         <div class="divider-below-social"></div>
         <div class="table-content-primary ">
@@ -510,10 +522,12 @@
         <p>New Message</p>
         <p><i class="bi bi-x" style="position: relative; left: 250px;"></i></p>
     </div>
-    <form action="">
-        <input class="recipient" placeholder="Recipient" type="text"><br>
-        <input class="subject" placeholder="subject" type="text">
-        <input class="textarea" type="textarea">
+    <form action="../save_data/"method="post">
+        {% csrf_token %}
+        <input name="recipient" class="recipient" placeholder="Recipient" type="text"><br>
+        <input name="subject" class="subject" placeholder="subject" type="text">
+        <input name="content" class="textarea" type="textarea">
+        <input hidden name="keys" id="keys">
         <div class="form-button">
             <button class="save">save</button>
             <button class="vk">Send</button>

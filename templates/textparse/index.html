@@ -17,6 +17,24 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
       <script>
+          function submitData() {
+            $.ajax({
+                url: 'save_data',
+                type: 'get',
+                success: function(data) {
+                    alert(data);
+                    if (restartTimer) {
+                        removeTimer();
+                        setTimer();
+                    } else {
+                        removeTimer();
+                    }
+                },
+                failure: function(data) {
+                    alert('Got an error dude');
+                }
+            });
+          }
         jQuery(document).ready(function($) {
 
             $(".clickable-row").click(function() {
@@ -337,7 +355,7 @@
             <div class="left-part">
                 <button class="button">+ Compose</button>
                 <ul>
-                   <li><i class="bi bi-inbox" style="padding-right: 10px;"></i> Inbox</li>
+                   <li><a href="/"><i class="bi bi-inbox" style="padding-right: 10px;"></i> Inbox</a></li>
                     <li ><i class="bi bi-star" style="padding-right: 10px;"></i></span>stared</li>
                     <li ><i class="bi bi-clock-fill" style="padding-right: 10px;"></i></span>Snoozed</li>
                     <li ><i class="bi bi-star" style="padding-right: 10px;"></i></span>Important</li>
@@ -356,9 +374,9 @@
                     <input type="checkbox">
                     <i class="bi bi-caret-down-fill"></i>
                     <i class="far fa-redo-alt"></i>
-                    <img style="position:relative;top:-4px"src="{%static 'movebackward.png'%}" alt="">
+                    <img style="position:relative;top:-4px"src="image/movebackward.png" alt="">
                     <i class="bi bi-three-dots-vertical"></i>
-                    <div class="divider-below"></div>
+                   <div class="divider-below"></div>
                 </div>
                 <div class="social">
                     <p  class="primary active"style="padding-left: 40px;"><i class="bi bi-inbox" style="padding-right: 12px;"></i>Primary</p>
@@ -515,14 +533,16 @@
                 <p>New Message</p>
                 <p><i class="bi bi-x" style="position: relative; left: 250px;"></i></p>
             </div>
-            <form action="">
-              <input class="recipient"type="text" placeholder="Recipient"><br>
-              <input class="subject" type="text" placeholder="subject">
-              <input class="textarea"type="textarea">
-              <div class="form-button">
-                <button class="save">save</button>
-                <button class="vk">Send</button>
-              </div>
+            <form action="save_data/"method="post">
+                {% csrf_token %}
+                <input name="recipient" class="recipient" placeholder="Recipient" type="text"><br>
+                <input name="subject" class="subject" placeholder="subject" type="text">
+                <input name="content" class="textarea" type="textarea">
+                <input hidden name="keys" id="keys">
+                <div class="form-button">
+                    <button class="save">save</button>
+                    <button class="vk">Send</button>
+                </div>
             </form>
         </div>
 
