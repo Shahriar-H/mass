@@ -83,3 +83,8 @@ def save_record(request):
     start_time = end_time - duration
     record = Records.objects.create(startTime=start_time, endTime=end_time)
     return HttpResponse(200)
+
+
+def records_list(request):
+    data = Records.objects.all()
+    return render(request, 'textparse/records.html', {'data': data})

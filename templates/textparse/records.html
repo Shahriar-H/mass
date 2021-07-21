@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+		 
+		<style type="text/css" media="all">
+		table#skill-11 td {
+            text-transform: capitalize;
+            font-size: 18px;
+            line-height: 32px;
+        }
+
+        table#graph2 tr {
+			background: #fff;
+		}
+
+		td#gr-col2 h2 {
+			margin-left: 20px;
+			width: 150px;
+		}
+
+		td#gr-col1 h2 {
+			color: #000;
+			font-size: 35px;
+			text-align: right;
+			padding-right: 30px;
+			width: 300px;
+		}
+        td#gr-col3 h2 {
+			font-size: 35px;
+			text-align: right;
+			padding-right: 30px;
+		}
+
+		table#skill-12 td {
+			width: 50%;
+		}
+		table#skill-11 td {
+			text-transform: capitalize;
+			font-size:22px;
+		}
+
+        body{font-family: '-apple-system'; color:#212529;}
+		.row3-table table td, .row3-table table th {
+			padding: 0px !important;
+		}
+		.row3-table table tr:nth-child(odd) {background-color: #092259;}
+		.row3-table table table td, .row3-table table table th {
+			padding: 0px;
+		}
+		thead th, thead td {
+			padding: 18px 18px;
+			font-size: 22px;
+			border-radius: 5px;
+			font-weight: 800;
+		}
+		tr:nth-child(odd) {background-color: #f2f2f2;}
+		tbody td {
+			padding: 18px 18px;
+			font-size: 16px;
+		}
+		.main {
+			padding: 0;
+			margin: 0;
+		}
+		@page {
+			size: A4 portrait; /* can use also 'landscape' for orientation */
+			border: thin solid black;
+			padding: 0px;
+
+			@bottom-center {
+				content: element(footer);
+			}
+
+			@top-center {
+				content: element(header);
+			}
+		}
+
+		.row3-table tbody {
+			font-size: 29px;
+			color: #fff;
+			line-height: 45px;
+		}
+
+		.row3-table table {
+			margin:45px;
+		}
+
+		.row5 p {font-size: 30px;line-height: 34px;}
+		.row5 img {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			width: 50%;
+		}
+
+		.page3-row1 p {
+            font-size: 35px;
+			line-height: 45px;
+			color: #ffffff;
+			font-weight: 600;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+		.page3-row3 p {
+			font-size: 24px;
+			line-height: 26px;
+		}
+
+		.page3-row4 li {
+			font-size: 20px;
+			line-height: 24px;
+		}
+
+		.page3-row4 p {
+			font-size: 20px;
+			line-height: 24px;
+		}
+		.page4-row1 {
+			display: flex;
+		}
+
+		table#skill-2 tbody tr {
+			text-align: center;
+		}
+		table#skill-2 tbody tr td {
+            font-size: 17px;
+            font-weight: 400;
+        }
+        table#skill-2 tr th {
+            border: solid 1px;
+            border-radius: 0;
+        }
+
+        table#skill-2 tr td {
+            border: solid 1px;
+        }
+        #skill-2 tr:nth-child(odd) {
+            background-color: #fff !important;
+        }
+
+        </style>
+    </head>
+<body>
+    <div class="main">
+        <div class="container">
+            <div style="width: 100%">
+            </div>
+            <div class="page4-row1">
+			<table style="width:100%;" id="skill_wise">
+				<thead><tr><td>Start Time</td><td>End Time</td><td>Created At</td></tr></thead>
+				<tbody>
+                    {% for record in data %}
+                        <tr><td>{{ record.startTime }}</td><td>{{ record.endTime }}</td><td>{{ record.createdAt }}</td></tr>
+                    {% endfor %}
+				</tbody>
+				<tfoot>
+				</tfoot>
+			</table>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
