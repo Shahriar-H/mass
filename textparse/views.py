@@ -1,6 +1,6 @@
 import datetime
 import json
-
+import csv
 from django import template
 from django.shortcuts import render, HttpResponse
 
@@ -88,3 +88,17 @@ def save_record(request):
 def records_list(request):
     data = Records.objects.all()
     return render(request, 'textparse/records.html', {'data': data})
+
+
+def export_users_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="records.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Start Time', 'End Time', 'Created At', 'Updated'])
+
+    users = Records.objects.all().values_list('startTime', 'endTime', 'createdAt', 'updatedAt')
+    for user in users:
+        writer.writerow(user)
+
+    return response
