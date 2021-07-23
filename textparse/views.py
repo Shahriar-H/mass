@@ -29,9 +29,12 @@ def index(request):
         #     print('saving data1')
         topic = request.POST.get('subject')
         body = request.POST.get('content')
+        recipient = request.POST.get('recipient')
+        subject = request.POST.get('subject')
         keys, final = parse(body)
         keys = json.dumps(keys)
-        data = Data.objects.create(topic=topic, body=body, parsed=final, keys=keys)
+        # topic=topic, body=body, parsed=final, keys=keys
+        message = Messages.objects.create(to=recipient, message=body, subject=subject,)
         final = {"top": "Topic", "topic": topic, "bod": "Body", "final": final}
         return render(request, 'textparse/index.html',
                       {'topics': topics, 'body': body, 'parsed': parsed, 'b': body, 'oc': 'red', 'color': 'green',

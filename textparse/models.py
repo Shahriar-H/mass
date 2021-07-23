@@ -16,10 +16,10 @@ class Messages(models.Model):
     to = models.CharField(max_length=90)
     message = models.CharField(max_length=900)
     subject = models.CharField(max_length=90)
-    startTime = models.DateTimeField()
-    endTime = models.DateTimeField()
-    createdAt = models.DateTimeField()
-    updatedAt = models.DateTimeField()
+    startTime = models.DateTimeField(default=datetime.datetime.now())
+    endTime = models.DateTimeField(default=datetime.datetime.now())
+    createdAt = models.DateTimeField(default=datetime.datetime.now())
+    updatedAt = models.DateTimeField(default=datetime.datetime.now())
 
     class Meta:
         managed = False
