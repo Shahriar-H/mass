@@ -437,9 +437,9 @@
             </div>
             <form action="/" method="post">
                 {% csrf_token %}
-                <input name="recipient" class="recipient" placeholder="Recipient" type="text"><br>
-                <input name="subject" class="subject" placeholder="subject" type="text">
-                <input name="content" class="textarea" type="textarea" >
+                <input name="recipient" class="recipient" placeholder="Recipient" type="text" required><br>
+                <input name="subject" class="subject" placeholder="subject" type="text" required>
+                <input name="content" class="textarea" type="textarea" required>
                 <input hidden name="keys" id="keys">
                 <div class="form-button">
                     <button class="save">save</button>

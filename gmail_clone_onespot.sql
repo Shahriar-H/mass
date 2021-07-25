@@ -296,6 +296,35 @@ LOCK TABLES `django_session` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Messages`
+--
+
+DROP TABLE IF EXISTS `Messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Messages` (
+  `_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `to` varchar(255) DEFAULT NULL,
+  `message` text,
+  `subject` varchar(255) DEFAULT NULL,
+  `startTime` datetime DEFAULT NULL,
+  `endTime` datetime DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Messages`
+--
+
+LOCK TABLES `Messages` WRITE;
+/*!40000 ALTER TABLE `Messages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Messages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Records`
 --
 
@@ -309,7 +338,7 @@ CREATE TABLE `Records` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -318,7 +347,7 @@ CREATE TABLE `Records` (
 
 LOCK TABLES `Records` WRITE;
 /*!40000 ALTER TABLE `Records` DISABLE KEYS */;
-INSERT INTO `Records` VALUES (1,'2021-07-15 06:30:44','2021-07-15 06:31:15','2021-07-15 06:26:39','2021-07-15 06:26:39'),(2,'2021-07-15 06:31:15','2021-07-15 06:31:27','2021-07-15 06:26:39','2021-07-15 06:26:39'),(3,'2021-07-15 06:31:28','2021-07-15 06:31:34','2021-07-15 06:26:39','2021-07-15 06:26:39'),(4,'2021-07-15 06:32:17','2021-07-15 06:32:22','2021-07-15 06:26:39','2021-07-15 06:26:39'),(5,'2021-07-15 06:35:16','2021-07-15 06:35:17','2021-07-15 06:26:39','2021-07-15 06:26:39'),(6,'2021-07-15 06:36:22','2021-07-15 06:36:25','2021-07-15 06:26:39','2021-07-15 06:26:39'),(7,'2021-07-15 06:36:26','2021-07-15 06:36:28','2021-07-15 06:26:39','2021-07-15 06:26:39'),(8,'2021-07-15 06:36:28','2021-07-15 06:36:30','2021-07-15 06:26:39','2021-07-15 06:26:39'),(9,'2021-07-15 06:37:39','2021-07-15 06:37:40','2021-07-15 06:26:39','2021-07-15 06:26:39'),(10,'2021-07-15 06:37:44','2021-07-15 06:37:47','2021-07-15 06:26:39','2021-07-15 06:26:39'),(11,'2021-07-15 07:27:22','2021-07-15 07:27:22','2021-07-15 07:06:53','2021-07-15 07:06:53'),(12,'2021-07-15 07:27:26','2021-07-15 07:27:26','2021-07-15 07:06:53','2021-07-15 07:06:53'),(13,'2021-07-15 07:27:44','2021-07-15 07:27:44','2021-07-15 07:06:53','2021-07-15 07:06:53'),(14,'2021-07-15 07:27:51','2021-07-15 07:27:51','2021-07-15 07:06:53','2021-07-15 07:06:53'),(15,'2021-07-15 07:30:55','2021-07-15 07:30:55','2021-07-15 07:06:53','2021-07-15 07:06:53'),(16,'2021-07-15 07:31:56','2021-07-15 07:31:56','2021-07-15 07:06:53','2021-07-15 07:06:53'),(17,'2021-07-15 07:32:09','2021-07-15 07:32:09','2021-07-15 07:06:53','2021-07-15 07:06:53'),(18,'2021-07-15 07:39:41','2021-07-15 07:39:56','2021-07-15 07:06:53','2021-07-15 07:06:53'),(19,'2021-07-15 07:39:57','2021-07-15 07:40:02','2021-07-15 07:06:53','2021-07-15 07:06:53'),(20,'2021-07-15 07:40:06','2021-07-15 07:40:10','2021-07-15 07:06:53','2021-07-15 07:06:53'),(21,'2021-07-23 01:54:30','2021-07-23 01:54:36','2021-07-23 01:54:13','2021-07-23 01:54:13'),(22,'2021-07-23 02:20:56','2021-07-23 02:20:56','2021-07-23 02:15:05','2021-07-23 02:15:05'),(23,'2021-07-23 02:23:21','2021-07-23 02:23:24','2021-07-23 02:15:05','2021-07-23 02:15:05'),(24,'2021-07-23 02:31:09','2021-07-23 02:31:12','2021-07-23 02:15:05','2021-07-23 02:15:05'),(25,'2021-07-23 02:31:21','2021-07-23 02:31:25','2021-07-23 02:15:05','2021-07-23 02:15:05'),(26,'2021-07-23 02:32:46','2021-07-23 02:32:55','2021-07-23 02:15:05','2021-07-23 02:15:05'),(27,'2021-07-23 02:32:58','2021-07-23 02:32:59','2021-07-23 02:15:05','2021-07-23 02:15:05'),(28,'2021-07-23 02:33:02','2021-07-23 02:33:04','2021-07-23 02:15:05','2021-07-23 02:15:05'),(29,'2021-07-23 02:33:10','2021-07-23 02:33:11','2021-07-23 02:15:05','2021-07-23 02:15:05'),(30,'2021-07-23 02:34:25','2021-07-23 02:38:38','2021-07-23 02:15:05','2021-07-23 02:15:05'),(31,'2021-07-25 11:14:37','2021-07-25 11:15:42','2021-07-25 11:08:45','2021-07-25 11:08:45'),(32,'2021-07-25 11:46:50','2021-07-25 11:56:18','2021-07-25 11:55:47','2021-07-25 11:55:47'),(33,'2021-07-25 12:07:38','2021-07-25 12:14:19','2021-07-25 12:14:12','2021-07-25 12:14:12'),(34,'2021-07-25 12:15:11','2021-07-25 12:15:16','2021-07-25 12:15:04','2021-07-25 12:15:04'),(35,'2021-07-25 12:15:19','2021-07-25 12:16:39','2021-07-25 12:16:33','2021-07-25 12:16:33'),(36,'2021-07-25 12:16:57','2021-07-25 12:16:58','2021-07-25 12:16:51','2021-07-25 12:16:51'),(37,'2021-07-25 12:17:00','2021-07-25 12:17:42','2021-07-25 12:16:51','2021-07-25 12:16:51'),(38,'2021-07-25 12:18:10','2021-07-25 12:18:12','2021-07-25 12:16:51','2021-07-25 12:16:51'),(39,'2021-07-25 12:20:09','2021-07-25 12:22:19','2021-07-25 12:22:03','2021-07-25 12:22:03'),(40,'2021-07-25 12:25:37','2021-07-25 12:25:48','2021-07-25 12:22:03','2021-07-25 12:22:03'),(41,'2021-07-25 12:26:34','2021-07-25 12:26:37','2021-07-25 12:22:03','2021-07-25 12:22:03'),(42,'2021-07-25 12:49:38','2021-07-25 12:49:41','2021-07-25 12:49:31','2021-07-25 12:49:31'),(43,'2021-07-25 12:49:43','2021-07-25 12:49:47','2021-07-25 12:49:31','2021-07-25 12:49:31'),(44,'2021-07-25 12:53:14','2021-07-25 12:53:16','2021-07-25 12:53:06','2021-07-25 12:53:06'),(45,'2021-07-25 12:53:20','2021-07-25 12:53:43','2021-07-25 12:53:06','2021-07-25 12:53:06'),(46,'2021-07-25 13:03:20','2021-07-25 13:03:26','2021-07-25 13:03:11','2021-07-25 13:03:11'),(47,'2021-07-25 13:03:29','2021-07-25 13:03:32','2021-07-25 13:03:11','2021-07-25 13:03:11'),(48,'2021-07-25 13:03:34','2021-07-25 13:03:36','2021-07-25 13:03:11','2021-07-25 13:03:11'),(49,'2021-07-25 13:05:41','2021-07-25 13:05:44','2021-07-25 13:05:31','2021-07-25 13:05:31'),(50,'2021-07-25 13:06:15','2021-07-25 13:06:16','2021-07-25 13:05:31','2021-07-25 13:05:31'),(51,'2021-07-25 13:09:04','2021-07-25 13:09:25','2021-07-25 13:09:16','2021-07-25 13:09:16'),(52,'2021-07-25 13:09:27','2021-07-25 13:09:32','2021-07-25 13:09:16','2021-07-25 13:09:16'),(53,'2021-07-25 13:09:47','2021-07-25 13:10:25','2021-07-25 13:09:16','2021-07-25 13:09:16'),(54,'2021-07-25 13:10:34','2021-07-25 13:10:59','2021-07-25 13:09:16','2021-07-25 13:09:16'),(55,'2021-07-25 13:11:39','2021-07-25 13:11:40','2021-07-25 13:09:16','2021-07-25 13:09:16'),(56,'2021-07-25 13:11:43','2021-07-25 13:11:53','2021-07-25 13:09:16','2021-07-25 13:09:16'),(57,'2021-07-25 13:11:55','2021-07-25 13:11:58','2021-07-25 13:09:16','2021-07-25 13:09:16');
+INSERT INTO `Records` VALUES (1,'2021-07-25 14:51:49','2021-07-25 14:51:51','2021-07-25 14:36:41','2021-07-25 14:36:41'),(2,'2021-07-25 14:54:05','2021-07-25 14:54:08','2021-07-25 14:53:33','2021-07-25 14:53:33');
 /*!40000 ALTER TABLE `Records` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,7 +363,7 @@ CREATE TABLE `textparse_data` (
   `topic` varchar(90) DEFAULT NULL,
   `body` text,
   `parsed` text,
-  `keys` varchar(112) DEFAULT NULL,
+  `keys` varchar(1000) DEFAULT NULL,
   `to` varchar(255) DEFAULT NULL,
   `startTime` datetime DEFAULT NULL,
   `endTime` datetime DEFAULT NULL,
@@ -350,7 +379,7 @@ CREATE TABLE `textparse_data` (
 
 LOCK TABLES `textparse_data` WRITE;
 /*!40000 ALTER TABLE `textparse_data` DISABLE KEYS */;
-INSERT INTO `textparse_data` VALUES (1,'Test Subject 1','This is test email 1 with Django Framework','This is test email 1 with Django Framework','{\"1\": \"SSN\", \"Django Framework\": \"PERSON\"}','akashshukla778@gmail.com','2021-07-25 13:05:31','2021-07-25 13:05:31','2021-07-25 13:05:31','2021-07-25 13:05:31'),(2,'Bank','Activate your new card and update recurring payments Debit card ending in 6915 Hi, David Tim, We recently mailed you a new debit card to help keep your account safe. Please activate your card as soon as you receive it. What you should do next (if you haven\'t already): Activate your new card right away by following the instructions found on the card\'s sticker. Contact any merchants who automatically charge your card and provide them with your new card information. Review your transaction history and contact us immediately if there are transactions that you didn\'t make','Activate your new card and update recurring payments Debit card ending in 6915 Hi, David Tim, We recently mailed you a new debit card to help keep your account safe. Please activate your card as soon as you receive it. What you should do next (if you haven\'t already): Activate your new card right away by following the instructions found on the card\'s sticker. Contact any merchants who automatically charge your card and provide them with your new card information. Review your transaction history and contact us immediately if there are transactions that you didn\'t make','{\"6915\": \"DATE\", \"Debit\": \"PRODUCT\", \"David Tim\": \"PERSON\"}','akash6586@yahoo.com','2021-07-25 13:09:16','2021-07-25 13:09:16','2021-07-25 13:09:16','2021-07-25 13:09:16');
+INSERT INTO `textparse_data` VALUES (1,'Bank','Activate your new card and update recurring payments Debit card ending in 6915 Hi, David Tim, We recently mailed you a new debit card to help keep your account safe. Please activate your card as soon as you receive it. What you should do next (if you haven\'t already): Activate your new card right away by following the instructions found on the card\'s sticker. Contact any merchants who automatically charge your card and provide them with your new card information. Review your transaction history and contact us immediately if there are transactions that you didn\'t make','Activate your new card and update recurring payments Debit card ending in 6915 Hi, David Tim, We recently mailed you a new debit card to help keep your account safe. Please activate your card as soon as you receive it. What you should do next (if you haven\'t already): Activate your new card right away by following the instructions found on the card\'s sticker. Contact any merchants who automatically charge your card and provide them with your new card information. Review your transaction history and contact us immediately if there are transactions that you didn\'t make','{\"6915\": \"DATE\", \"Debit\": \"PRODUCT\", \"David Tim\": \"PERSON\"}','akash6586@yahoo.com','2021-07-25 14:53:33','2021-07-25 14:53:33','2021-07-25 14:53:33','2021-07-25 14:53:33'),(2,'Insurance','Dear Member,  A new Explanation of Benefit (EOB) for you or a covered member of your family is now available in your My Account. An EOB is not a bill, but it includes amounts processed by your plan and/or amounts you may owe. It may also includes claims not processed due to lack of information from you and/or your provider.  To view your EOB:  Create or login to My Account by clicking here If the link above does not work, please go to https://myaccount.uhcsr.com Once logged in, select Completed Claims in My Claims/Balances and then select View Details. My Account is a valuable tool to help manage your health care benefits. Once logged in you can access your ID card, plan materials, check claim status, and several other features.	','Dear Member,  A new Explanation of Benefit (EOB) for you or a covered member of your family is now available in your My Account. An EOB is not a bill, but it includes amounts processed by your plan and/or amounts you may owe. It may also includes claims not processed due to lack of information from you and/or your provider.  To view your EOB:  Create or login to My Account by clicking here If the link above does not work, please go to https://myaccount.uhcsr.com Once logged in, select Completed Claims in My Claims/Balances and then select View Details. My Account is a valuable tool to help manage your health care benefits. Once logged in you can access your ID card, plan materials, check claim status, and several other features.','{\"Explanation of Benefit\": \"ORGANIZATION\", \"My Claims/Balances\": \"ORGANIZATION\", \"View Details\": \"WORK_OF_ART\", \"Account\": \"ORGANIZATION\"}','akash6586@yahoo.com','2021-07-25 14:53:33','2021-07-25 14:53:33','2021-07-25 14:53:33','2021-07-25 14:53:33');
 /*!40000 ALTER TABLE `textparse_data` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -363,4 +392,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-25 18:43:21
+-- Dump completed on 2021-07-25 20:29:56
