@@ -32,7 +32,6 @@
         jQuery(document).ready(function($) {
 
             $(".clickable-row").click(function() {
-                let id = this.id
                 window.location = 'detail/?id=' + this.id
             });
 
@@ -70,6 +69,7 @@
             jQuery('.social1').removeClass('active');
             });
         });
+
     </script>
 
     {% block extracss%}
@@ -88,11 +88,8 @@
                 padding-right: 11px;
             }
             .primary{
-                padding-left: 9px;
                 font-size: 16px;
-                padding-right: 20px;
-                padding-top: 9px;
-                padding-bottom: 12px;
+                padding: 9px 20px 12px 9px;
             }
             .active{
                 background-color:#efefef;
@@ -133,8 +130,8 @@
 
             .top-container .gmail-text {
                 position: relative;
-                top: -45px;
-                left: 43px;
+                top: -40px;
+                left: 50px;
             }
             i.bi.bi-search {
                 position: relative;
@@ -155,9 +152,11 @@
             }
             .container{
                 display: flex;
+                flex: 1;
                 margin-top: 10px;
             }
             .container .right-part {
+                flex: 4.5;
                 position: relative;
                 left: -75px;
                 width: 100%;
@@ -180,22 +179,38 @@
               }
 
               .container .left-part {
-                width: 25%;
-                position: relative;
-                left: -100px;
+                  flex: 1;
+                  position: relative;
+                  left: -100px;
             }
 
             .container .left-part  ul {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
                 list-style-type: none;
                 margin-top: -7px;
+                align-content: flex-start;
+                align-items: flex-start;
+                justify-content: flex-start;
             }
 
             .container .left-part  li {
+                flex: 1;
+                display: flex;
                 padding-top: 20px;
                 padding-left: 0px;
+                align-items: flex-start;
+                align-self: flex-start;
+                align-content: flex-start;
+                justify-content: flex-start;
             }
 
-
+            .container .bottom-icon {
+                list-style-type: none;
+                position: relative;
+                margin-top: 10px;
+            }
             .divider-below {
                 border: 1px solid #efefef;
                 width: 842px;
@@ -250,17 +265,19 @@
                 border: none;
                 border-bottom: 1px solid #efefef;
                 padding-right: 205px;
+                padding-bottom: 5px;
             }
 
             input.subject {
                 border: none;
                 border-bottom: 1px solid #efefef;
                 padding-right: 205px;
-                /* padding-bottom: 200px; */
+                padding-bottom: 5px;
             }
             input.textarea {
                 border: none;
                 padding-bottom: 200px;
+                width:100%;
             }
             .form-button {
                 background: #000;
@@ -313,8 +330,10 @@
                 <div class="menu-icon">
                 </div>
                 <div class="gmail-text">
-                    <h3><span><img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png" alt=""></span>
-<!--                    Gmail-->
+                    <h3>
+                        <a href="/">
+                            <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png" alt="">
+                        </a>
                     </h3>
                 </div>
             </div>
@@ -356,7 +375,7 @@
                     <input type="checkbox">
                     <i class="bi bi-caret-down-fill"></i>
                     <i class="far fa-redo-alt"></i>
-                    <img style="position:relative;top:-4px"src="image/movebackward.png" alt="">
+<!--                    <img style="position:relative;top:-4px"src="image/movebackward.png" alt="">-->
                     <i class="bi bi-three-dots-vertical"></i>
                    <div class="divider-below"></div>
                 </div>
@@ -376,12 +395,17 @@
                                     <input type="checkbox">
                                 <i class="bi bi-star" style="padding-left: 10px;"></i>
                                 <p class="mail-to">{{mail.to}}</p>
-                                <p class="test">{{mail.subject|add:" "|add:mail.message|add:"         "|slice:"0:28 "}}</p>
+                                <p class="test">{{mail.topic|add:" "|add:mail.body|add:"         "|slice:"0:28 "}}</p>
                                 <p class="date">{{mail.createdAt | date}}</p>
                                 </td>
 
                             </tr>
-
+                        {% empty %}
+                        <tr class="content clickable-row">
+                                <td>
+                                    <p class="test">No Data Available </p>
+                                </td>
+                        </tr>
                         {% endfor %}
                         </tbody>
                     </table>
@@ -415,7 +439,7 @@
                 {% csrf_token %}
                 <input name="recipient" class="recipient" placeholder="Recipient" type="text"><br>
                 <input name="subject" class="subject" placeholder="subject" type="text">
-                <input name="content" class="textarea" type="textarea">
+                <input name="content" class="textarea" type="textarea" >
                 <input hidden name="keys" id="keys">
                 <div class="form-button">
                     <button class="save">save</button>

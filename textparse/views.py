@@ -5,43 +5,31 @@ from django import template
 from django.shortcuts import render, HttpResponse
 
 from textparse.models import Data
-from textparse.models import Messages, Records
+from textparse.models import Records
 from .forms import InputText
 from .parse import parse
 
 
 # Create your views here.
 def index(request):
-    objects = Messages.objects.all()
-
     data = Data.objects.all()
     topics = [obj.topic for obj in data]
     body = [obj.body for obj in data]
     parsed = [obj.parsed for obj in data]
     keys_all = [obj.keys for obj in data]
-    print(keys_all)
     if request.method == "POST":
-        form = InputText(request.POST)
-        print('saving data')
-        print(request.POST.get('content'))
-        print(request.POST.get('subject'))
-        # if form.is_valid():
-        #     print('saving data1')
         topic = request.POST.get('subject')
         body = request.POST.get('content')
         recipient = request.POST.get('recipient')
-        subject = request.POST.get('subject')
         keys, final = parse(body)
         keys = json.dumps(keys)
-        # topic=topic, body=body, parsed=final, keys=keys
-        message = Messages.objects.create(to=recipient, message=body, subject=subject,)
+        Data.objects.create(topic=topic, body=body, parsed=final, keys=keys, to=recipient)
+        data = Data.objects.all()
         final = {"top": "Topic", "topic": topic, "bod": "Body", "final": final}
         return render(request, 'textparse/index.html',
                       {'topics': topics, 'body': body, 'parsed': parsed, 'b': body, 'oc': 'red', 'color': 'green',
-                       'keys': keys, 'final': final, 'objects': objects})
+                       'keys': keys, 'final': final, 'objects': data})
 
-    # else:
-    #     form = InputText()
     else:
         return render(request, 'textparse/index.html',
                       {
@@ -50,33 +38,29 @@ def index(request):
                           'body': body,
                           'parsed': parsed,
                           'oc': 'green', 'color': 'red',
-                          'objects': objects})
+                          'objects': data})
 
 
 def detail(request):
-    data = Messages.objects.filter(id=request.GET.get('id')).first()
-    data_keys = Messages.objects.values('id')
-
-    if data is not None:
-        mail_body = data.message
-        record_keys = [obj.get('id') for obj in data_keys]
-        result = Data.objects.all()
-        topics = [obj.topic for obj in result]
-        parsed = [obj.parsed for obj in result]
-        keys_all = [obj.keys for obj in result]
-        body = [obj.body for obj in result]
-        print(keys_all)
-        return render(request, 'textparse/detail.html',
-                      {'detail': data,
-                       'keys_all': keys_all,
-                       'topics': topics,
-                       'body': body,
-                       'mail_body': mail_body,
-                       'parsed': parsed,
-                       'oc': 'green', 'color': 'red',
-                       'id': request.GET.get('id'),
-                       'record_keys': record_keys
-                       })
+    result = Data.objects.filter(id=request.GET.get('id'))  # all()
+    all_records = Data.objects.all()
+    for item in all_records:
+        print(item.id)
+    record_keys = [obj.id for obj in all_records]
+    topics = [obj.topic for obj in result]
+    parsed = [obj.parsed for obj in result]
+    keys_all = [obj.keys for obj in result]
+    body = [obj.body for obj in result]
+    return render(request, 'textparse/detail.html',
+                  {'detail': result[0],
+                   'keys_all': keys_all,
+                   'topics': topics,
+                   'body': body,
+                   'parsed': parsed,
+                   'oc': 'green', 'color': 'red',
+                   'id': request.GET.get('id'),
+                   'record_keys': record_keys
+                   })
 
 
 def save_record(request):
@@ -84,7 +68,7 @@ def save_record(request):
     now = datetime.datetime.now()
     end_time = now
     start_time = end_time - duration
-    record = Records.objects.create(startTime=start_time, endTime=end_time)
+    Records.objects.create(startTime=start_time, endTime=end_time)
     return HttpResponse(200)
 
 

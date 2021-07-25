@@ -59,7 +59,8 @@
         function seekForward(){
             let keys = {{record_keys | safe}}
             let id = {{id | safe}}
-            let index = keys.indexOf(id.toString())
+            console.log(id, keys)
+            let index = keys.indexOf(id)
             if (index != -1 && index < (keys.length - 1)){
                 recordTime(true);
                 window.location = '../detail/?id=' + keys[index + 1]
@@ -69,7 +70,7 @@
         function seekBackward(){
             let keys = {{record_keys | safe}}
             let id = {{id | safe}}
-            let index = keys.indexOf(id.toString())
+            let index = keys.indexOf(id)
             if (index != -1 && index > 0){
                 recordTime(true);
                 window.location = '../detail/?id=' + keys[index - 1]
@@ -80,39 +81,17 @@
             setTimeout(() => {
                 parse(i);
             }, 2);
-            var tl = document.createTextNode("Topic")
-            var bl = document.createTextNode("Body")
-            var topc = document.createElement("div")
-            var br = document.createElement("br")
-            topc.setAttribute("id", "id_topic")
-            topc.innerHTML = topics[i]
-            var bod = document.createElement("div")
-            var x = document.createElement("button")
-            x.setAttribute("class", "admin")
-            x.innerHTML = "Main Menu"
-            bod.setAttribute("id", "id_body")
-
-            bod.innerHTML = ""
-            body[i].split("\n").forEach((str) => bod.innerHTML += str + "<br>")
-
-            console.log(bod.innerHTML)
-            var arr1 = document.createElement("button")
-            var arr2 = document.createElement("button")
-            arr1.innerHTML = "<--"
-            arr2.innerHTML = "-->"
-            arr1.setAttribute("class", "arr")
-            arr2.setAttribute("class", "arr")
-            arr1.setAttribute("onClick", "show(" + (i > 0 ? (i - 1) % topics.length : topics.length - 1) + ")")
-            arr2.setAttribute("onClick", "show(" + ((i + 1) % topics.length) + ")")
         }
 
         function parser(i) {
-            var bodyog = body[i]
+            var bodyog = body[i];
             newkeys = new Object;
             var k = 0;
-            console.log(keys_all[i]);
-            var kys = JSON.parse(keys_all[i])
-            console.log(kys);
+            var kys;
+            try {
+                kys = JSON.parse(keys_all[i])
+            } catch (e) { console.log("Error parsing to JSON") }
+            // var kys = JSON.parse(keys_all[i])
             for (key in kys) {
                 var c = 'key' + k;
                 newkeys[c] = key;
@@ -120,7 +99,6 @@
                 k++;
             }
             bodyog = bodyog.split('\n');
-            console.log(bodyog)
             bodyog.forEach((s) => {
                 s.split(" ").forEach((str) => {
                     var bdy = document.getElementById("body_content");
@@ -151,7 +129,6 @@
         }
 
         function parse(i) {
-            console.log(body[i], "Setting loader")
             let s = "";
             body[i].split("\n").forEach((str) => s += str + "<br>")
             parser(i)
@@ -159,10 +136,8 @@
     </script>
     <script>
         jQuery(document).ready(function ($) {
-
             setTimer();
-            document.getElementById("table_content").innerText = "{{mail_body}}";
-
+            // document.getElementById("table_content").innerText = "{{mail_body}}";
             jQuery('.button').click(function () {
                 jQuery('.bottom-form').css("display", "block");
             });
@@ -205,8 +180,8 @@
 
         .top-container .gmail-text {
             position: relative;
-            top: -45px;
-            left: 43px;
+            top: -40px;
+            left: 50px;
         }
 
         i.bi.bi-search {
@@ -230,10 +205,12 @@
 
         .container {
             display: flex;
+            flex: 1;
             margin-top: 10px;
         }
 
         .container .right-part {
+            flex: 4.5;
             position: relative;
             left: -75px;
             width: 100%;
@@ -258,7 +235,7 @@
         }
 
         .container .left-part {
-            width: 25%;
+            flex: 1;
             position: relative;
             left: -100px;
         }
@@ -322,18 +299,20 @@
             border: none;
             border-bottom: 1px solid #efefef;
             padding-right: 205px;
+            padding-bottom: 5px;
         }
 
         input.subject {
             border: none;
             border-bottom: 1px solid #efefef;
             padding-right: 205px;
-            /* padding-bottom: 200px; */
+            padding-bottom: 5px;
         }
 
         input.textarea {
             border: none;
             padding-bottom: 200px;
+            width:100%;
         }
 
         .form-button {
@@ -370,14 +349,6 @@
             left: 68%;
             top: -56px;
         }
-
-        .table-content-social {
-            display: none;
-        }
-
-        .table-content-promotion {
-            display: none;
-        }
     </style>
     {% endblock %}
 
@@ -391,9 +362,10 @@
             <div class="menu-icon">
             </div>
             <div class="gmail-text">
-                <h3><span><img alt=""
-                               src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png"></span>
-                    <!--                    Gmail-->
+                <h3>
+                    <a href="/">
+                        <img alt="" src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png">
+                    </a>
                 </h3>
             </div>
         </div>
@@ -435,7 +407,7 @@
             <input type="checkbox">
             <i class="bi bi-caret-down-fill"></i>
             <i class="far fa-redo-alt"></i>
-            <img alt="" src="{%static 'movebackward.png'%}" style="position:relative;top:-4px">
+<!--            <img alt="" src="{%static 'movebackward.png'%}" style="position:relative;top:-4px">-->
             <i class="bi bi-three-dots-vertical"></i>
             <a href="javascript:seekBackward()"><i class="bi bi-chevron-left"></i></a>
             <a href="javascript:seekForward()"><i class="bi bi-chevron-right"></i></a>
@@ -444,7 +416,7 @@
         <div style="padding: 10px"> <i class="bi bi-trash"></i> </div>
 
         <div class="social">
-            <h5 class="" style="padding-bottom: 10px;">Subject: {{detail.subject}}</h5>
+            <h5 class="" style="padding-bottom: 10px;">Subject: {{detail.topic}}</h5>
         </div>
         <div class="divider-below-social"></div>
         <div id="body_content" class="table-content-primary ">
