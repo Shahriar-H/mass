@@ -77,6 +77,20 @@
             }
         }
 
+        function deleteEmail(){
+            let id = {{id | safe}}
+            $.ajax({
+                url: '../delete_email?id=' + id,
+                type: 'get',
+                success: function(data) {
+                    window.location = "/"
+                },
+                failure: function(data) {
+                    alert('Error while deleting the mail.');
+                }
+            });
+        }
+
         function show(i) {
             setTimeout(() => {
                 parse(i);
@@ -407,13 +421,13 @@
             <input type="checkbox">
             <i class="bi bi-caret-down-fill"></i>
             <i class="far fa-redo-alt"></i>
-<!--            <img alt="" src="{%static 'movebackward.png'%}" style="position:relative;top:-4px">-->
+
             <i class="bi bi-three-dots-vertical"></i>
             <a href="javascript:seekBackward()"><i class="bi bi-chevron-left"></i></a>
             <a href="javascript:seekForward()"><i class="bi bi-chevron-right"></i></a>
             <div class="divider-below"></div>
         </div>
-        <div style="padding: 10px"> <i class="bi bi-trash"></i> </div>
+        <div style="padding: 10px"> <a href="javascript:deleteEmail()"><i class="bi bi-trash"></i></a> </div>
 
         <div class="social">
             <h5 class="" style="padding-bottom: 10px;">Subject: {{detail.topic}}</h5>
@@ -439,11 +453,11 @@
         {% csrf_token %}
         <input name="recipient" class="recipient" placeholder="Recipient" type="text" required><br>
         <input name="subject" class="subject" placeholder="subject" type="text" required>
-        <input name="content" class="textarea" type="textarea" required >
+        <textarea name="content" rows="8" cols="55" required></textarea>
         <input hidden name="keys" id="keys">
         <div class="form-button">
-            <button class="save">save</button>
-            <button class="vk">Send</button>
+            <button class="save" hidden>Send</button>
+            <button class="vk">save</button>
         </div>
     </form>
 </div>

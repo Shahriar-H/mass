@@ -280,12 +280,14 @@
                 width:100%;
             }
             .form-button {
+                display: flex;
+                flex: 1;
                 background: #000;
                 height: 42px;
             }
 
             button.save {
-                margin-top: 11px;
+                margin-top: 5px;
                 background-color: white;
                 margin-left: 9px;
                 padding-left: 13px;
@@ -294,14 +296,14 @@
             }
 
             button.vk {
-                  margin-top: 11px;
+                  margin-top: 5px;
                   background-color: white;
                   margin-left: 9px;
                   padding-left: 13px;
                   padding-right: 13px;
                   font-size: 16px;
                   position: relative;
-                  left: 240px;
+                  left: 300px;
             }
             .bottom-form{
                 display:none
@@ -439,11 +441,11 @@
                 {% csrf_token %}
                 <input name="recipient" class="recipient" placeholder="Recipient" type="text" required><br>
                 <input name="subject" class="subject" placeholder="subject" type="text" required>
-                <input name="content" class="textarea" type="textarea" required>
+                <textarea name="content" rows="8" cols="55" required></textarea>
                 <input hidden name="keys" id="keys">
                 <div class="form-button">
-                    <button class="save">save</button>
-                    <button class="vk">Send</button>
+                    <button class="save" hidden>Send</button>
+                    <button class="vk">save</button>
                 </div>
             </form>
         </div>

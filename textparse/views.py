@@ -89,3 +89,9 @@ def export_users_csv(request):
         writer.writerow(user)
 
     return response
+
+
+def delete_email(request):
+    id = request.GET.get('id')
+    Data.objects.filter(pk=id).delete()
+    return HttpResponse(200)
