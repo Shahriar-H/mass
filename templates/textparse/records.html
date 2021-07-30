@@ -159,10 +159,10 @@
             </div>
             <div class="page4-row1">
 			<table style="width:100%;" id="skill_wise">
-				<thead><tr><td>Start Time</td><td>End Time</td><td>Created At</td></tr></thead>
+				<thead><tr><td>Start Time</td><td>End Time</td></tr></thead>
 				<tbody>
                     {% for record in data %}
-                        <tr><td>{{ record.startTime|date:'Y-m-d H:i:s' }}</td><td>{{ record.endTime|date:'Y-m-d H:i:s' }}</td><td>{{ record.createdAt|date:'Y-m-d H:i:s' }}</td></tr>
+                        <tr><td>{{ record.startTime|date:'Y-m-d H:i:s' }}</td><td>{{ record.endTime|date:'Y-m-d H:i:s' }}</td></tr>
                     {% endfor %}
 				</tbody>
 				<tfoot>
