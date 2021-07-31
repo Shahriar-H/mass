@@ -82,11 +82,12 @@ def export_users_csv(request):
     response['Content-Disposition'] = 'attachment; filename="records.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['Start Time', 'End Time', 'Created At', 'Updated'])
+    writer.writerow(['Start Time', 'End Time', 'Created At', 'Duration'])
 
-    users = Records.objects.all().values_list('startTime', 'endTime', 'createdAt', 'updatedAt')
+    users = Records.objects.all().values_list('startTime', 'endTime', 'createdAt')
     for user in users:
-        writer.writerow(user)
+        test = user + ((user[1] - user[0]),)
+        writer.writerow(test)
 
     return response
 
