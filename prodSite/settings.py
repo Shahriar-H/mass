@@ -76,8 +76,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'gmail_clone_onespot',
-        'USER': 'akash',
-        'PASSWORD': 'ShuklA778@',
+        'USER': 'root',
+        'PASSWORD': 'shaki',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }

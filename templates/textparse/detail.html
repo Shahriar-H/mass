@@ -1,3 +1,4 @@
+<audio></audio>
 <!doctype html>
 {% load static %}
 <html lang="en">
@@ -47,7 +48,7 @@
         function setTimer(){
             time = 0;
             timer = setInterval(()=> {
-                console.log(time)
+                // console.log(time)
                 time++;
             }, 1000)
         }
@@ -97,6 +98,41 @@
             }, 2);
         }
 
+       
+
+        function CheckHeadPhon(){
+            if (!navigator.mediaDevices.selectAudioOutput) {
+                alert("selectAudioOutput() not supported by your browser.")
+                return false;
+            }
+
+            
+
+            navigator.mediaDevices
+            .selectAudioOutput()
+            .then((device) => {
+                console.log(
+                device
+                //   `${device.kind}: ${device.label} id = ${device.deviceId}`
+                );
+                
+                if (device) {
+                    // document.getElementById("status").innerHTML = "Headset Connected";
+                    // document.getElementById("deviceName").innerHTML = device[1].label;
+                    console.log('ygbyhuhu')
+                    return true;
+
+                }else{
+                    return true;
+                }
+                
+                
+            })
+            .catch((err) => {
+                console.error(`${err.name}: ${err.message}`);
+            });
+        }
+
         function parser(i) {
             var bodyog = body[i];
             newkeys = new Object;
@@ -125,9 +161,35 @@
                         button.setAttribute("class", "spk")
                         bdy.appendChild(button);
                         let x = new SpeechSynthesisUtterance(newkeys[str]);
-                        button.addEventListener("click", () => {
-                            speechSynthesis.speak(x);
-                            event.preventDefault();
+                        button.addEventListener("click", (event) => {
+                            
+                            if (!navigator.mediaDevices.selectAudioOutput) {
+                                alert("selectAudioOutput() not supported by your browser.")
+                                return false;
+                            }
+
+                            navigator.mediaDevices
+                            .selectAudioOutput()
+                            .then((device) => {
+                                console.log(device);
+                                headphonesConnected = device.label.toLowerCase().includes("head");
+                                // alert(headphonesConnected)
+                                if (headphonesConnected) {
+                                    speechSynthesis.speak(x);
+                                    event.preventDefault();
+
+                                }
+                                else{
+                                    alert("No Headphone Connected!")
+                                }
+                                
+                                
+                            })
+                            .catch((err) => {
+                                console.error(`${err.name}: ${err.message}`);
+                            });
+
+                            
                         });
                         console.log(button)
                     } else {
@@ -383,6 +445,7 @@
                 </h3>
             </div>
         </div>
+        
         <div class="col-8 center-section">
             <input placeholder="search Record" type="search">
             <span><i class="bi bi-search"></i></span>
@@ -424,7 +487,7 @@
 
             <i class="bi bi-three-dots-vertical"></i>
             <a href="javascript:seekBackward()"><i class="bi bi-chevron-left"></i></a>
-            <a href="javascript:seekForward()"><i class="bi bi-chevron-right"></i></a>
+            <a href="javascript:seekForward()">Move on</a>
             <div class="divider-below"></div>
         </div>
         <div style="padding: 10px"> <a href="javascript:deleteEmail()"><i class="bi bi-trash"></i></a> </div>
